@@ -60,16 +60,17 @@
     .feature-name{font-size:.83rem;font-weight:500}
     .gen-btn{width:100%;margin-top:28px;background:var(--green);color:#fff;border:none;padding:17px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s,transform .1s;display:none;align-items:center;justify-content:center;gap:8px}
     .gen-btn:hover{background:var(--green-dark)}
-    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999;padding:16px;backdrop-filter:blur(4px)}
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999;padding:16px;backdrop-filter:blur(4px);overflow-y:auto}
     .modal-bg.open{display:flex}
-    .modal-box{background:#fff;border-radius:18px;padding:36px;width:100%;max-width:420px;animation:popIn .22s ease}
+    .modal-box{background:#fff;border-radius:18px;padding:36px;width:100%;max-width:420px;animation:popIn .22s ease;margin:auto}
     @keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
     .modal-box h3{font-family:'DM Serif Display',serif;font-size:1.6rem;margin-bottom:6px}
     .modal-sub{color:var(--text-muted);font-size:.88rem;margin-bottom:26px;line-height:1.6}
     .field{margin-bottom:16px}
     .field label{display:block;font-size:.75rem;font-weight:700;color:#374151;margin-bottom:6px;text-transform:uppercase;letter-spacing:.07em}
-    .field input{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.93rem;outline:none;font-family:inherit;transition:border-color .2s}
-    .field input:focus{border-color:var(--green)}
+    .field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.93rem;outline:none;font-family:inherit;transition:border-color .2s;background:#fff}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green)}
+    .field textarea{resize:vertical;min-height:80px}
     .field-err{color:var(--red);font-size:.74rem;margin-top:4px;display:none}
     .submit-btn{width:100%;background:var(--green);color:#fff;border:none;padding:14px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:background .2s}
     .submit-btn:hover{background:var(--green-dark)}
@@ -102,16 +103,32 @@
     .cta{margin-top:40px;padding-top:32px;border-top:1px solid #f3f4f6;text-align:center}
     .cta h3{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:10px}
     .cta p{color:var(--text-muted);font-size:.93rem;max-width:500px;margin:0 auto 28px;line-height:1.7}
-    .cta-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
-    .btn-call{background:var(--green);color:#fff;padding:14px 34px;border-radius:10px;font-weight:600;font-size:.93rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .2s}
-    .btn-call:hover{background:var(--green-dark)}
-    .btn-email{background:#fff;color:var(--green);border:1.5px solid var(--green);padding:14px 34px;border-radius:10px;font-weight:600;font-size:.93rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-    .btn-email:hover{background:rgba(30,70,32,.04)}
-    @media(max-width:580px){.card{padding:22px}.card-wrap{margin-top:-16px}.budget-grid{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr}.grid4{grid-template-columns:1fr}.results-wrap{padding:28px 14px}}
+    .quote-btn{background:var(--gold);color:#fff;border:none;padding:16px 40px;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;transition:background .2s;display:inline-block}
+    .quote-btn:hover{background:#b8942e}
+    /* QUOTE FORM PAGE */
+    #pgQuote{display:none}
+    .quote-wrap{max-width:600px;margin:0 auto;padding:48px 20px}
+    .quote-hdr{text-align:center;margin-bottom:32px}
+    .quote-hdr h1{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:8px}
+    .quote-hdr p{color:var(--text-muted);font-size:.93rem}
+    .quote-card{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:36px}
+    .quote-card .field{margin-bottom:20px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .quote-submit{width:100%;background:var(--green);color:#fff;border:none;padding:16px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:background .2s}
+    .quote-submit:hover{background:var(--green-dark)}
+    .quote-submit:disabled{opacity:.5;cursor:not-allowed}
+    /* THANK YOU */
+    #pgThanks{display:none}
+    .thanks-wrap{max-width:500px;margin:80px auto;padding:0 20px;text-align:center}
+    .thanks-icon{font-size:3.5rem;margin-bottom:20px}
+    .thanks-wrap h1{font-family:'DM Serif Display',serif;font-size:2rem;margin-bottom:12px}
+    .thanks-wrap p{color:var(--text-muted);line-height:1.7;margin-bottom:28px}
+    @media(max-width:580px){.card{padding:22px}.card-wrap{margin-top:-16px}.budget-grid{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr}.grid4{grid-template-columns:1fr}.results-wrap{padding:28px 14px}.two-col{grid-template-columns:1fr}.quote-card{padding:22px}}
   </style>
 </head>
 <body>
 
+<!-- UPLOAD PAGE -->
 <div id="pgUpload">
   <header class="header">
     <div class="badge">FREE INSTANT TOOL</div>
@@ -125,7 +142,6 @@
   </header>
   <div class="card-wrap">
     <div class="card">
-
       <div class="step-block">
         <div class="step-row">
           <div class="step-num">1</div>
@@ -151,15 +167,15 @@
           <div><div class="step-title">What's your rough budget?</div><div class="step-sub">This helps us show you what's realistic for your space</div></div>
         </div>
         <div class="budget-grid">
-          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, small lawn, basic planting')">
+          <div class="budget-card" onclick="selectBudget(this,'Under £5k','simple paving or gravel, small lawn, basic planting')">
             <div class="bc-emoji">💰</div><div class="bc-price">Under £5k</div>
             <div class="bc-label">Simple refresh — paving, gravel, basic planting</div>
           </div>
-          <div class="budget-card" onclick="selectBudget(this,'mid-range','quality patio, decking, feature planting, lighting, raised beds')">
+          <div class="budget-card" onclick="selectBudget(this,'£5k–£15k','quality patio, decking, feature planting, lighting, raised beds')">
             <div class="bc-emoji">💰💰</div><div class="bc-price">£5k – £15k</div>
             <div class="bc-label">Full redesign — decking, patio, planting, lighting</div>
           </div>
-          <div class="budget-card" onclick="selectBudget(this,'premium','natural stone patio, bespoke decking, water features, outdoor kitchen, premium lighting, mature trees')">
+          <div class="budget-card" onclick="selectBudget(this,'£15k+','natural stone patio, bespoke decking, water features, outdoor kitchen, premium lighting, mature trees')">
             <div class="bc-emoji">💰💰💰</div><div class="bc-price">£15k+</div>
             <div class="bc-label">Premium transformation — full luxury build</div>
           </div>
@@ -206,6 +222,7 @@
   </div>
 </div>
 
+<!-- LEAD MODAL -->
 <div id="modal" class="modal-bg">
   <div class="modal-box">
     <h3>Almost there! 🎉</h3>
@@ -225,6 +242,7 @@
   </div>
 </div>
 
+<!-- RESULTS PAGE -->
 <div id="pgResults">
   <div class="results-wrap">
     <div class="results-hdr">
@@ -256,22 +274,104 @@
       </div>
       <div class="cta">
         <h3>Ready to make this a reality?</h3>
-        <p>Get in touch and we'll turn your AI vision into your actual garden. Free consultation, no obligation.</p>
-        <div class="cta-btns">
-          <a href="tel:YOUR-PHONE-NUMBER" class="btn-call">📞 Call Us Now</a>
-          <a href="mailto:YOUR-EMAIL@YOURDOMAIN.COM" class="btn-email">✉️ Email Us</a>
-        </div>
+        <p>Love what you see? Get a free, no-obligation quote from our team and we'll turn this vision into your actual garden.</p>
+        <button class="quote-btn" onclick="showQuotePage()">📋 Get a Free Quote</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- QUOTE FORM PAGE -->
+<div id="pgQuote">
+  <div class="quote-wrap">
+    <div class="quote-hdr">
+      <h1>Get Your Free Quote</h1>
+      <p>Fill in your details below and we'll be in touch within 24 hours with a personalised quote.</p>
+    </div>
+    <div class="quote-card">
+      <div class="two-col">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="qName" placeholder="John Smith">
+          <div class="field-err" id="qNameErr">Required</div>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="qEmail" placeholder="you@example.com">
+          <div class="field-err" id="qEmailErr">Enter a valid email</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" id="qPhone" placeholder="07700 900000">
+          <div class="field-err" id="qPhoneErr">Required</div>
+        </div>
+        <div class="field">
+          <label>Postcode</label>
+          <input type="text" id="qPostcode" placeholder="LS1 1AA">
+          <div class="field-err" id="qPostcodeErr">Required</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Approximate Garden Size</label>
+        <select id="qSize">
+          <option value="">Select size…</option>
+          <option>Small (under 20 sqm)</option>
+          <option>Medium (20–50 sqm)</option>
+          <option>Large (50–100 sqm)</option>
+          <option>Very large (100 sqm+)</option>
+        </select>
+        <div class="field-err" id="qSizeErr">Please select a size</div>
+      </div>
+      <div class="field">
+        <label>What would you like done?</label>
+        <textarea id="qWant" placeholder="Describe what you'd like — e.g. full garden redesign, new patio, decking, lawn…"></textarea>
+      </div>
+      <div class="field">
+        <label>Best time to contact you</label>
+        <select id="qTime">
+          <option value="">Select a time…</option>
+          <option>Morning (8am–12pm)</option>
+          <option>Afternoon (12pm–5pm)</option>
+          <option>Evening (5pm–8pm)</option>
+          <option>Anytime</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Budget</label>
+        <select id="qBudget">
+          <option value="">Select budget…</option>
+          <option>Under £5,000</option>
+          <option>£5,000 – £15,000</option>
+          <option>£15,000 – £30,000</option>
+          <option>£30,000+</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <button class="quote-submit" id="quoteSubmitBtn" onclick="submitQuote()">Send My Quote Request →</button>
+      <div class="modal-note" style="margin-top:16px">🔒 Your details are kept private and never shared.</div>
+    </div>
+  </div>
+</div>
+
+<!-- THANK YOU PAGE -->
+<div id="pgThanks">
+  <div class="thanks-wrap">
+    <div class="thanks-icon">🎉</div>
+    <h1>Thank You!</h1>
+    <p>We've received your quote request and will be in touch within 24 hours. We can't wait to help transform your garden.</p>
+    <p style="color:var(--text-muted);font-size:.85rem;margin-top:16px">In the meantime, feel free to save the AI images of your garden to show our team when we get in touch.</p>
+  </div>
+</div>
+
 <script>
-var SHEET_URL='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+var SHEET_URL='https://script.google.com/macros/s/AKfycbwonyyn7HGL-vZt8zVxZd-WbXJjcjAnnhXBHsT-PqSeE8Gb6bc2ZLhNZbKLw89dXCxH2g/exec';
 var PROXY_URL='/.netlify/functions/generate';
 var imageDataURL=null,imageBase64=null,imageMime=null;
 var selectedBudget=null,selectedBudgetDesc='';
 var selectedStyles=[],selectedFeatures=[];
+var leadName='',leadEmail='';
 var dz=document.getElementById('dropzone');
 var fi=document.getElementById('fileInput');
 
@@ -342,8 +442,6 @@ function checkCanGenerate(){
   document.getElementById('genBtn').style.display=ok?'flex':'none';
 }
 
-// Smart green-pixel detection mask
-// Black = edit this (the garden), White = keep this (everything else)
 function generateMask(imgEl){
   var w=imgEl.naturalWidth,h=imgEl.naturalHeight;
   var src=document.createElement('canvas');
@@ -357,8 +455,6 @@ function generateMask(imgEl){
   var md=mdata.data;
   for(var i=0;i<d.length;i+=4){
     var r=d[i],g=d[i+1],b=d[i+2];
-    // Green pixel = garden = black in mask (edit)
-    // Brown/dirt pixels also count as garden
     var isGreen=(g>r*1.1&&g>b*1.1&&g>50);
     var isBrown=(r>80&&g>50&&b<80&&r>g&&r>b);
     var val=(isGreen||isBrown)?0:255;
@@ -384,7 +480,10 @@ function buildSummary(){
   return b.join(' · ');
 }
 
-function openModal(){document.getElementById('modal').classList.add('open');setTimeout(function(){document.getElementById('nameIn').focus();},80);}
+function openModal(){
+  document.getElementById('modal').classList.add('open');
+  setTimeout(function(){document.getElementById('nameIn').focus();},80);
+}
 function closeModal(){document.getElementById('modal').classList.remove('open');}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('modal').classList.contains('open'))submitLead();});
@@ -396,14 +495,16 @@ async function submitLead(){
   document.getElementById('nameErr').style.display=name?'none':'block';
   document.getElementById('emailErr').style.display=emailOk?'none':'block';
   if(!name||!emailOk)return;
+  leadName=name;leadEmail=email;
   var btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.textContent='Saving…';
-  if(SHEET_URL&&SHEET_URL!=='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
-    try{
-      var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
-      await fetch(SHEET_URL+'?name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&timestamp='+encodeURIComponent(ts)+'&choices='+encodeURIComponent(buildSummary()),{method:'GET',mode:'no-cors'});
-    }catch(e){}
-  }
+
+  // Save lead to Google Sheet
+  try{
+    var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
+    await fetch(SHEET_URL+'?type=lead&timestamp='+encodeURIComponent(ts)+'&name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&choices='+encodeURIComponent(buildSummary()),{method:'GET',mode:'no-cors'});
+  }catch(e){}
+
   closeModal();
   document.getElementById('pgUpload').style.display='none';
   document.getElementById('pgResults').style.display='block';
@@ -412,6 +513,66 @@ async function submitLead(){
   document.getElementById('resultsSub').textContent='Based on your choices: '+buildSummary();
   window.scrollTo({top:0,behavior:'smooth'});
   generate();
+}
+
+function showQuotePage(){
+  // Pre-fill name and email from lead modal
+  document.getElementById('qName').value=leadName;
+  document.getElementById('qEmail').value=leadEmail;
+  if(selectedBudget){
+    var sel=document.getElementById('qBudget');
+    for(var i=0;i<sel.options.length;i++){
+      if(sel.options[i].text.indexOf(selectedBudget.replace('£',''))>-1){sel.selectedIndex=i;break;}
+    }
+  }
+  document.getElementById('pgResults').style.display='none';
+  document.getElementById('pgQuote').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function submitQuote(){
+  var name=document.getElementById('qName').value.trim();
+  var email=document.getElementById('qEmail').value.trim();
+  var phone=document.getElementById('qPhone').value.trim();
+  var postcode=document.getElementById('qPostcode').value.trim();
+  var size=document.getElementById('qSize').value;
+  var want=document.getElementById('qWant').value.trim();
+  var time=document.getElementById('qTime').value;
+  var budget=document.getElementById('qBudget').value;
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  document.getElementById('qNameErr').style.display=name?'none':'block';
+  document.getElementById('qEmailErr').style.display=emailOk?'none':'block';
+  document.getElementById('qPhoneErr').style.display=phone?'none':'block';
+  document.getElementById('qPostcodeErr').style.display=postcode?'none':'block';
+  document.getElementById('qSizeErr').style.display=size?'none':'block';
+
+  if(!name||!emailOk||!phone||!postcode||!size)return;
+
+  var btn=document.getElementById('quoteSubmitBtn');
+  btn.disabled=true;btn.textContent='Sending…';
+
+  try{
+    var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
+    await fetch(SHEET_URL
+      +'?type=quote'
+      +'&timestamp='+encodeURIComponent(ts)
+      +'&name='+encodeURIComponent(name)
+      +'&email='+encodeURIComponent(email)
+      +'&choices='+encodeURIComponent(buildSummary())
+      +'&phone='+encodeURIComponent(phone)
+      +'&address='+encodeURIComponent(postcode)
+      +'&gardenSize='+encodeURIComponent(size)
+      +'&wantDone='+encodeURIComponent(want)
+      +'&bestTime='+encodeURIComponent(time)
+      +'&budget='+encodeURIComponent(budget),
+      {method:'GET',mode:'no-cors'}
+    );
+  }catch(e){}
+
+  document.getElementById('pgQuote').style.display='none';
+  document.getElementById('pgThanks').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 async function generate(){
@@ -429,12 +590,7 @@ async function generate(){
     var res=await fetch(PROXY_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        imageBase64:imageBase64,
-        maskBase64:maskBase64,
-        imageMime:imageMime,
-        prompt:buildPrompt()
-      })
+      body:JSON.stringify({imageBase64:imageBase64,maskBase64:maskBase64,imageMime:imageMime,prompt:buildPrompt()})
     });
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||JSON.stringify(data));
