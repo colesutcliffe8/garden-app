@@ -6,12 +6,7 @@
   <title>AI Garden Visualiser | See Your Dream Garden</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --green: #1E4620; --green-dark: #163618; --gold: #C9A856;
-      --cream: #FAF6EF; --cream-dark: #f0e9dc; --text: #1a1a1a;
-      --text-muted: #6b7280; --white: #fff; --red: #ef4444;
-      --shadow: 0 20px 60px rgba(0,0,0,0.12); --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
-    }
+    :root{--green:#1E4620;--green-dark:#163618;--gold:#C9A856;--cream:#FAF6EF;--cream-dark:#f0e9dc;--text:#1a1a1a;--text-muted:#6b7280;--white:#fff;--red:#ef4444;--shadow:0 20px 60px rgba(0,0,0,0.12);--shadow-sm:0 4px 20px rgba(0,0,0,0.08)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;color:var(--text)}
     .header{background:var(--green);background-image:radial-gradient(circle at 20% 50%,rgba(201,168,86,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(201,168,86,.06) 0%,transparent 40%),radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:auto,auto,22px 22px;color:#fff;padding:56px 24px 80px;text-align:center;position:relative;overflow:hidden}
@@ -157,15 +152,15 @@
           <div><div class="step-title">What's your rough budget?</div><div class="step-sub">This helps us show you what's realistic for your space</div></div>
         </div>
         <div class="budget-grid">
-          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, small lawn, basic planting, minimal features')">
+          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, small lawn, basic planting')">
             <div class="bc-emoji">💰</div><div class="bc-price">Under £5k</div>
             <div class="bc-label">Simple refresh — paving, gravel, basic planting</div>
           </div>
-          <div class="budget-card" onclick="selectBudget(this,'mid-range','quality patio, decking or artificial lawn, feature planting, garden lighting, raised beds')">
+          <div class="budget-card" onclick="selectBudget(this,'mid-range','quality patio, decking, feature planting, lighting, raised beds')">
             <div class="bc-emoji">💰💰</div><div class="bc-price">£5k – £15k</div>
             <div class="bc-label">Full redesign — decking, patio, planting, lighting</div>
           </div>
-          <div class="budget-card" onclick="selectBudget(this,'premium','large natural stone patio, bespoke decking, water features, outdoor kitchen, premium lighting, mature trees')">
+          <div class="budget-card" onclick="selectBudget(this,'premium','natural stone patio, bespoke decking, water features, outdoor kitchen, premium lighting, mature trees')">
             <div class="bc-emoji">💰💰💰</div><div class="bc-price">£15k+</div>
             <div class="bc-label">Premium transformation — full luxury build</div>
           </div>
@@ -178,11 +173,11 @@
           <div><div class="step-title">What style are you going for?</div><div class="step-sub">Pick one or more that match your vision</div></div>
         </div>
         <div class="style-grid">
-          <div class="style-pill" onclick="toggleStyle(this,'low maintenance, clean lines, gravel or bark mulch, evergreen shrubs')">🌿 Low Maintenance</div>
-          <div class="style-pill" onclick="toggleStyle(this,'family friendly, safe soft lawn, play area, open space for children')">👨‍👩‍👧 Family Friendly</div>
-          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary, sleek lines, large format porcelain paving, architectural plants')">🏙️ Modern / Contemporary</div>
-          <div class="style-pill" onclick="toggleStyle(this,'cottage garden, natural, lush mixed planting, colourful flowers, rustic materials')">🌸 Cottage / Natural</div>
-          <div class="style-pill" onclick="toggleStyle(this,'entertainment space, outdoor dining area, seating zones, ambient lighting')">🥂 Entertainment Space</div>
+          <div class="style-pill" onclick="toggleStyle(this,'low maintenance with gravel and evergreen shrubs')">🌿 Low Maintenance</div>
+          <div class="style-pill" onclick="toggleStyle(this,'family friendly with lawn and open space')">👨‍👩‍👧 Family Friendly</div>
+          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary with porcelain paving and architectural plants')">🏙️ Modern / Contemporary</div>
+          <div class="style-pill" onclick="toggleStyle(this,'cottage garden with colourful flowers and rustic materials')">🌸 Cottage / Natural</div>
+          <div class="style-pill" onclick="toggleStyle(this,'entertainment space with dining area and seating')">🥂 Entertainment Space</div>
         </div>
       </div>
 
@@ -192,18 +187,18 @@
           <div><div class="step-title">What do you want included?</div><div class="step-sub">Tick everything you'd like in your new garden</div></div>
         </div>
         <div class="feature-grid">
-          <div class="feature-item" onclick="toggleFeature(this,'natural stone or porcelain patio')"><div class="feature-cb"></div><span class="feature-emoji">🪨</span><span class="feature-name">Patio</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'timber or composite decking')"><div class="feature-cb"></div><span class="feature-emoji">🪵</span><span class="feature-name">Decking</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'lush green lawn')"><div class="feature-cb"></div><span class="feature-emoji">🌱</span><span class="feature-name">Lawn</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting with path lights and spotlights')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'raised planters and flower beds')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'garden fencing or screening panels')"><div class="feature-cb"></div><span class="feature-emoji">🪜</span><span class="feature-name">Fencing / Screening</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'water feature or pond')"><div class="feature-cb"></div><span class="feature-emoji">💧</span><span class="feature-name">Water Feature</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'outdoor seating area with furniture')"><div class="feature-cb"></div><span class="feature-emoji">🪑</span><span class="feature-name">Seating Area</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'fire pit or outdoor fireplace')"><div class="feature-cb"></div><span class="feature-emoji">🔥</span><span class="feature-name">Fire Pit</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'garden shed or storage')"><div class="feature-cb"></div><span class="feature-emoji">🏠</span><span class="feature-name">Shed / Storage</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'vegetable patch or kitchen garden')"><div class="feature-cb"></div><span class="feature-emoji">🥦</span><span class="feature-name">Veg Patch</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'outdoor kitchen or BBQ area')"><div class="feature-cb"></div><span class="feature-emoji">🍖</span><span class="feature-name">Outdoor Kitchen / BBQ</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'patio')"><div class="feature-cb"></div><span class="feature-emoji">🪨</span><span class="feature-name">Patio</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'decking')"><div class="feature-cb"></div><span class="feature-emoji">🪵</span><span class="feature-name">Decking</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'lawn')"><div class="feature-cb"></div><span class="feature-emoji">🌱</span><span class="feature-name">Lawn</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'raised beds and planters')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'fencing and screening')"><div class="feature-cb"></div><span class="feature-emoji">🪜</span><span class="feature-name">Fencing / Screening</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'water feature')"><div class="feature-cb"></div><span class="feature-emoji">💧</span><span class="feature-name">Water Feature</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'seating area with garden furniture')"><div class="feature-cb"></div><span class="feature-emoji">🪑</span><span class="feature-name">Seating Area</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'fire pit')"><div class="feature-cb"></div><span class="feature-emoji">🔥</span><span class="feature-name">Fire Pit</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'garden shed')"><div class="feature-cb"></div><span class="feature-emoji">🏠</span><span class="feature-name">Shed / Storage</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'vegetable patch')"><div class="feature-cb"></div><span class="feature-emoji">🥦</span><span class="feature-name">Veg Patch</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor kitchen and BBQ')"><div class="feature-cb"></div><span class="feature-emoji">🍖</span><span class="feature-name">Outdoor Kitchen / BBQ</span></div>
         </div>
       </div>
 
@@ -349,23 +344,16 @@ function checkCanGenerate(){
 }
 
 function buildPrompt(){
-  var p=[
-    'IMPORTANT: This is a garden transformation of the EXACT photo provided. You must preserve everything outside the garden fence completely unchanged — the surrounding buildings, rooftops, sky, walls, neighbouring properties, roads and everything beyond the fence line must remain pixel-perfect identical to the original photo.',
-    'ONLY change what is inside the garden fence. Do not alter the fence itself, the camera angle, the perspective, the lighting of the surroundings, or anything outside the enclosed garden area.',
-    'Inside the garden: replace all overgrown weeds, grass and plants with a beautifully landscaped professional garden design.',
-    'Budget: '+selectedBudget+'.'
-  ];
-  if(selectedBudgetDesc)p.push('Features appropriate for this budget: '+selectedBudgetDesc+'.');
-  if(selectedStyles.length>0)p.push('Garden style: '+selectedStyles.join(' and ')+'.');
-  if(selectedFeatures.length>0)p.push('The new garden design must include: '+selectedFeatures.join(', ')+'.');
-  p.push('The result must look like a real photograph taken from the same position as the original — same angle, same surroundings, only the garden interior has changed. Natural daylight. Photorealistic. Professional finish.');
-  return p.join(' ');
+  var features=[];
+  if(selectedStyles.length>0)features=features.concat(selectedStyles);
+  if(selectedFeatures.length>0)features=features.concat(selectedFeatures);
+  return 'Keep this image exactly the same. Only change the garden area inside the fence. Replace the overgrown grass and weeds with a landscaped garden containing: '+features.join(', ')+'. Do not change the background, sky, buildings, fences, walls, camera angle or anything outside the garden.';
 }
 
 function buildSummary(){
   var b=[];
   if(selectedBudget)b.push(selectedBudget+' budget');
-  if(selectedStyles.length>0)b.push(selectedStyles.map(function(s){return s.split(',')[0];}).join(', '));
+  if(selectedStyles.length>0)b.push(selectedStyles.join(', '));
   if(selectedFeatures.length>0)b.push(selectedFeatures.join(', '));
   return b.join(' · ');
 }
