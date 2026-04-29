@@ -342,25 +342,26 @@ function checkCanGenerate(){
   document.getElementById('genBtn').style.display=ok?'flex':'none';
 }
 
-// Detect green pixels = garden, make those black in mask, everything else white
+// Smart green-pixel detection mask
+// Black = edit this (the garden), White = keep this (everything else)
 function generateMask(imgEl){
-  var w=imgEl.naturalWidth, h=imgEl.naturalHeight;
-  var canvas=document.createElement('canvas');
-  canvas.width=w; canvas.height=h;
-  var ctx=canvas.getContext('2d');
-  ctx.drawImage(imgEl,0,0);
-  var pixels=ctx.getImageData(0,0,w,h);
-  var d=pixels.data;
+  var w=imgEl.naturalWidth,h=imgEl.naturalHeight;
+  var src=document.createElement('canvas');
+  src.width=w;src.height=h;
+  src.getContext('2d').drawImage(imgEl,0,0);
+  var d=src.getContext('2d').getImageData(0,0,w,h).data;
   var mask=document.createElement('canvas');
-  mask.width=w; mask.height=h;
+  mask.width=w;mask.height=h;
   var mctx=mask.getContext('2d');
   var mdata=mctx.createImageData(w,h);
   var md=mdata.data;
   for(var i=0;i<d.length;i+=4){
     var r=d[i],g=d[i+1],b=d[i+2];
-    // Detect green-ish pixels (the garden/grass)
-    var isGarden=(g>r*1.1 && g>b*1.1 && g>60);
-    var val=isGarden?0:255; // black=edit, white=keep
+    // Green pixel = garden = black in mask (edit)
+    // Brown/dirt pixels also count as garden
+    var isGreen=(g>r*1.1&&g>b*1.1&&g>50);
+    var isBrown=(r>80&&g>50&&b<80&&r>g&&r>b);
+    var val=(isGreen||isBrown)?0:255;
     md[i]=md[i+1]=md[i+2]=val;
     md[i+3]=255;
   }
@@ -372,7 +373,7 @@ function buildPrompt(){
   var features=[];
   if(selectedStyles.length>0)features=features.concat(selectedStyles);
   if(selectedFeatures.length>0)features=features.concat(selectedFeatures);
-  return 'Landscaped garden with exactly: '+features.join(', ')+'. Keep the exact same garden size, shape and boundaries. Do not add any buildings, extensions, ponds or features not listed. Do not change the fence, walls or anything outside the garden.';
+  return 'Professionally landscaped garden with: '+features.join(', ')+'. The garden must be exactly the same size and shape as in the original photo — do not make it bigger or smaller. Do not add any buildings, extensions, conservatories, ponds, or anything not listed above. Keep the fences, walls and all surroundings completely unchanged.';
 }
 
 function buildSummary(){
@@ -420,16 +421,11 @@ async function generate(){
   var status=document.getElementById('loadStatus');
   try{
     status.textContent='Analysing your garden…';
-
-    // Load image and detect green pixels for the mask
     var img=new Image();
-    img.crossOrigin='anonymous';
     img.src=imageDataURL;
     await new Promise(function(resolve){img.onload=resolve;});
     var maskBase64=generateMask(img);
-
     status.textContent='Sending to AI…';
-
     var res=await fetch(PROXY_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -440,7 +436,6 @@ async function generate(){
         prompt:buildPrompt()
       })
     });
-
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||JSON.stringify(data));
     if(!data.data||data.data.length===0)throw new Error('No images returned. Please try again.');
