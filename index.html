@@ -1,8 +1,3 @@
-I’ve adjusted the prompt generation part so that the AI keeps the garden’s exact layout, boundaries, surroundings and perspective identical to your uploaded photo — only changing the design/features inside the garden area as you select. All other code remains unchanged and fully functional.
-
-Here’s the modified full code:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +6,7 @@ Here’s the modified full code:
   <title>AI Garden Visualiser | See Your Dream Garden</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--green:#1E4620;--green-dark:#163618;--gold:#C9A856;--cream:#FAF6EF;--cream-dark:#f0e9dc;--text:#1a1a1a;--text-muted:#6b7280;--white:#fff;--red:#ef4444;--shadow:0 20px 60px rgba(0,0,0,0.12);--shadow-sm:0 4px 20px rgba(0,0,0,0.08)}
+    :root{--green:#1E4620;--green-dark:#163618;--gold:#C9A856;--cream:#FAF6EF;--cream-dark:#f0e9dc;--text:#1a1a1a;--text-muted:#6b7280;--red:#ef4444;--shadow:0 20px 60px rgba(0,0,0,0.12);--shadow-sm:0 4px 20px rgba(0,0,0,0.08)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;color:var(--text)}
     .header{background:var(--green);background-image:radial-gradient(circle at 20% 50%,rgba(201,168,86,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(201,168,86,.06) 0%,transparent 40%),radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:auto,auto,22px 22px;color:#fff;padding:56px 24px 80px;text-align:center;position:relative;overflow:hidden}
@@ -65,7 +60,6 @@ Here’s the modified full code:
     .feature-name{font-size:.83rem;font-weight:500}
     .gen-btn{width:100%;margin-top:28px;background:var(--green);color:#fff;border:none;padding:17px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s,transform .1s;display:none;align-items:center;justify-content:center;gap:8px}
     .gen-btn:hover{background:var(--green-dark)}
-    .gen-btn:active{transform:scale(.99)}
     .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999;padding:16px;backdrop-filter:blur(4px)}
     .modal-bg.open{display:flex}
     .modal-box{background:#fff;border-radius:18px;padding:36px;width:100%;max-width:420px;animation:popIn .22s ease}
@@ -124,4 +118,338 @@ Here’s the modified full code:
     <h1>See exactly what your <em>dream garden</em> could look like</h1>
     <p>Upload a photo, tell us what you want, and our AI generates a realistic vision of your new garden.</p>
     <div class="stats">
-      <div><div class="stat-val">Realistic</div
+      <div><div class="stat-val">Realistic</div><div class="stat-lbl">True to your space</div></div>
+      <div><div class="stat-val">Personalised</div><div class="stat-lbl">Built around your choices</div></div>
+      <div><div class="stat-val">Instant</div><div class="stat-lbl">Results in seconds</div></div>
+    </div>
+  </header>
+  <div class="card-wrap">
+    <div class="card">
+
+      <div class="step-block">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div><div class="step-title">Upload your garden photo</div><div class="step-sub">Any angle works — front, back, patio or side return</div></div>
+        </div>
+        <div id="dropzone" class="dropzone">
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" style="display:none">
+          <div class="dz-icon">📷</div>
+          <h4>Drop your photo here</h4>
+          <p>JPG, PNG or WEBP · max 10MB</p>
+          <button class="choose-btn" id="chooseBtn" type="button">Choose file</button>
+          <div class="dz-note">Processed privately · never stored permanently</div>
+        </div>
+        <div id="previewWrap" class="preview-wrap">
+          <img id="previewImg" src="" alt="Your garden">
+          <button class="remove-btn" onclick="clearImage()">✕ Remove photo</button>
+        </div>
+      </div>
+
+      <div class="step-block" id="step2Block" style="opacity:0.4;pointer-events:none">
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div><div class="step-title">What's your rough budget?</div><div class="step-sub">This helps us show you what's realistic for your space</div></div>
+        </div>
+        <div class="budget-grid">
+          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, small lawn, basic planting')">
+            <div class="bc-emoji">💰</div><div class="bc-price">Under £5k</div>
+            <div class="bc-label">Simple refresh — paving, gravel, basic planting</div>
+          </div>
+          <div class="budget-card" onclick="selectBudget(this,'mid-range','quality patio, decking, feature planting, lighting, raised beds')">
+            <div class="bc-emoji">💰💰</div><div class="bc-price">£5k – £15k</div>
+            <div class="bc-label">Full redesign — decking, patio, planting, lighting</div>
+          </div>
+          <div class="budget-card" onclick="selectBudget(this,'premium','natural stone patio, bespoke decking, water features, outdoor kitchen, premium lighting, mature trees')">
+            <div class="bc-emoji">💰💰💰</div><div class="bc-price">£15k+</div>
+            <div class="bc-label">Premium transformation — full luxury build</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-block" id="step3Block" style="opacity:0.4;pointer-events:none">
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div><div class="step-title">What style are you going for?</div><div class="step-sub">Pick one or more that match your vision</div></div>
+        </div>
+        <div class="style-grid">
+          <div class="style-pill" onclick="toggleStyle(this,'low maintenance with gravel and evergreen shrubs')">🌿 Low Maintenance</div>
+          <div class="style-pill" onclick="toggleStyle(this,'family friendly with lawn and open space')">👨‍👩‍👧 Family Friendly</div>
+          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary with porcelain paving and architectural plants')">🏙️ Modern / Contemporary</div>
+          <div class="style-pill" onclick="toggleStyle(this,'cottage garden with colourful flowers and rustic materials')">🌸 Cottage / Natural</div>
+          <div class="style-pill" onclick="toggleStyle(this,'entertainment space with dining area and seating')">🥂 Entertainment Space</div>
+        </div>
+      </div>
+
+      <div class="step-block" id="step4Block" style="opacity:0.4;pointer-events:none">
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div><div class="step-title">What do you want included?</div><div class="step-sub">Tick everything you'd like in your new garden</div></div>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-item" onclick="toggleFeature(this,'patio')"><div class="feature-cb"></div><span class="feature-emoji">🪨</span><span class="feature-name">Patio</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'decking')"><div class="feature-cb"></div><span class="feature-emoji">🪵</span><span class="feature-name">Decking</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'lawn')"><div class="feature-cb"></div><span class="feature-emoji">🌱</span><span class="feature-name">Lawn</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'raised beds and planters')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'fencing and screening')"><div class="feature-cb"></div><span class="feature-emoji">🪜</span><span class="feature-name">Fencing / Screening</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'water feature')"><div class="feature-cb"></div><span class="feature-emoji">💧</span><span class="feature-name">Water Feature</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'seating area with garden furniture')"><div class="feature-cb"></div><span class="feature-emoji">🪑</span><span class="feature-name">Seating Area</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'fire pit')"><div class="feature-cb"></div><span class="feature-emoji">🔥</span><span class="feature-name">Fire Pit</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'garden shed')"><div class="feature-cb"></div><span class="feature-emoji">🏠</span><span class="feature-name">Shed / Storage</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'vegetable patch')"><div class="feature-cb"></div><span class="feature-emoji">🥦</span><span class="feature-name">Veg Patch</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor kitchen and BBQ')"><div class="feature-cb"></div><span class="feature-emoji">🍖</span><span class="feature-name">Outdoor Kitchen / BBQ</span></div>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="genBtn" onclick="openModal()">🌿 Generate My Dream Garden</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="modal-bg">
+  <div class="modal-box">
+    <h3>Almost there! 🎉</h3>
+    <p class="modal-sub">Enter your details to unlock your personalised garden visualisation.</p>
+    <div class="field">
+      <label>Your Name</label>
+      <input type="text" id="nameIn" placeholder="e.g. John Smith" autocomplete="name">
+      <div class="field-err" id="nameErr">Please enter your name.</div>
+    </div>
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" id="emailIn" placeholder="you@example.com" autocomplete="email">
+      <div class="field-err" id="emailErr">Please enter a valid email address.</div>
+    </div>
+    <button class="submit-btn" id="submitBtn" onclick="submitLead()">View My Results →</button>
+    <div class="modal-note">🔒 We respect your privacy and will never share your details.</div>
+  </div>
+</div>
+
+<div id="pgResults">
+  <div class="results-wrap">
+    <div class="results-hdr">
+      <h1>✨ Your Dream Garden</h1>
+      <p id="resultsSub">Here's what your garden could look like based on your choices.</p>
+    </div>
+    <div id="loadBox" class="load-box">
+      <div class="spinner"></div>
+      <h3>Generating your garden…</h3>
+      <p>Our AI is building your personalised garden. This takes around 20–40 seconds.</p>
+      <div class="load-status" id="loadStatus">Preparing your image…</div>
+    </div>
+    <div id="errBox" class="err-box">
+      <h3>Generation failed</h3>
+      <p id="errMsg">Something went wrong. Please try again.</p>
+      <button class="retry-btn" onclick="generate()">Try Again</button>
+    </div>
+    <div id="resBox" class="res-box">
+      <h2>Your Garden Transformation</h2>
+      <p class="res-summary" id="resSummary"></p>
+      <div class="lbl lbl-orig">Your Garden Now</div>
+      <img id="origImg" src="" alt="Original garden" class="orig-img">
+      <div class="lbl lbl-gen">AI-Generated Versions of Your New Garden</div>
+      <div class="grid4">
+        <img id="r1" src="" alt="View 1">
+        <img id="r2" src="" alt="View 2">
+        <img id="r3" src="" alt="View 3">
+        <img id="r4" src="" alt="View 4">
+      </div>
+      <div class="cta">
+        <h3>Ready to make this a reality?</h3>
+        <p>Get in touch and we'll turn your AI vision into your actual garden. Free consultation, no obligation.</p>
+        <div class="cta-btns">
+          <a href="tel:YOUR-PHONE-NUMBER" class="btn-call">📞 Call Us Now</a>
+          <a href="mailto:YOUR-EMAIL@YOURDOMAIN.COM" class="btn-email">✉️ Email Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SHEET_URL='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+var PROXY_URL='/.netlify/functions/generate';
+var imageDataURL=null,imageBase64=null,imageMime=null;
+var selectedBudget=null,selectedBudgetDesc='';
+var selectedStyles=[],selectedFeatures=[];
+var dz=document.getElementById('dropzone');
+var fi=document.getElementById('fileInput');
+
+document.getElementById('chooseBtn').addEventListener('click',function(e){e.stopPropagation();fi.click();});
+dz.addEventListener('click',function(){fi.click();});
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('over');});
+dz.addEventListener('dragleave',function(){dz.classList.remove('over');});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
+fi.addEventListener('change',function(){if(fi.files[0])loadFile(fi.files[0]);});
+
+function loadFile(file){
+  if(!file.type.match(/image\/(jpeg|png|webp)/)){alert('Please upload a JPG, PNG or WEBP image.');return;}
+  if(file.size>10*1024*1024){alert('Please use an image under 10MB.');return;}
+  imageMime=file.type;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    imageDataURL=e.target.result;
+    imageBase64=imageDataURL.split(',')[1];
+    document.getElementById('previewImg').src=imageDataURL;
+    document.getElementById('previewWrap').style.display='block';
+    dz.style.display='none';
+    document.getElementById('step2Block').style.opacity='1';
+    document.getElementById('step2Block').style.pointerEvents='auto';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearImage(){
+  imageDataURL=null;imageBase64=null;imageMime=null;fi.value='';
+  document.getElementById('previewImg').src='';
+  document.getElementById('previewWrap').style.display='none';
+  dz.style.display='';
+  ['step2Block','step3Block','step4Block'].forEach(function(id){
+    document.getElementById(id).style.opacity='0.4';
+    document.getElementById(id).style.pointerEvents='none';
+  });
+  document.getElementById('genBtn').style.display='none';
+  selectedBudget=null;
+}
+
+function selectBudget(el,label,desc){
+  document.querySelectorAll('.budget-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');
+  selectedBudget=label;selectedBudgetDesc=desc;
+  ['step3Block','step4Block'].forEach(function(id){
+    document.getElementById(id).style.opacity='1';
+    document.getElementById(id).style.pointerEvents='auto';
+  });
+  checkCanGenerate();
+}
+
+function toggleStyle(el,desc){
+  el.classList.toggle('selected');
+  if(el.classList.contains('selected')){selectedStyles.push(desc);}
+  else{selectedStyles=selectedStyles.filter(function(s){return s!==desc;});}
+  checkCanGenerate();
+}
+
+function toggleFeature(el,desc){
+  el.classList.toggle('selected');
+  if(el.classList.contains('selected')){selectedFeatures.push(desc);}
+  else{selectedFeatures=selectedFeatures.filter(function(f){return f!==desc;});}
+  checkCanGenerate();
+}
+
+function checkCanGenerate(){
+  var ok=imageBase64&&selectedBudget&&(selectedStyles.length>0||selectedFeatures.length>0);
+  document.getElementById('genBtn').style.display=ok?'flex':'none';
+}
+
+// Generate a mask: black rectangle covering the bottom 70% of image (the garden area)
+// White = keep unchanged, Black = edit this area
+function generateMask(width, height){
+  var canvas=document.createElement('canvas');
+  canvas.width=width;
+  canvas.height=height;
+  var ctx=canvas.getContext('2d');
+  // Fill everything white (keep)
+  ctx.fillStyle='white';
+  ctx.fillRect(0,0,width,height);
+  // Fill bottom 70% black (edit - the garden)
+  ctx.fillStyle='black';
+  ctx.fillRect(0,Math.floor(height*0.3),width,height);
+  return canvas.toDataURL('image/png').split(',')[1];
+}
+
+function buildPrompt(){
+  var features=[];
+  if(selectedStyles.length>0)features=features.concat(selectedStyles);
+  if(selectedFeatures.length>0)features=features.concat(selectedFeatures);
+  return 'Replace the garden with a professionally landscaped garden containing: '+features.join(', ')+'. Keep the same perspective and lighting.';
+}
+
+function buildSummary(){
+  var b=[];
+  if(selectedBudget)b.push(selectedBudget+' budget');
+  if(selectedStyles.length>0)b.push(selectedStyles.join(', '));
+  if(selectedFeatures.length>0)b.push(selectedFeatures.join(', '));
+  return b.join(' · ');
+}
+
+function openModal(){document.getElementById('modal').classList.add('open');setTimeout(function(){document.getElementById('nameIn').focus();},80);}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('modal').classList.contains('open'))submitLead();});
+
+async function submitLead(){
+  var name=document.getElementById('nameIn').value.trim();
+  var email=document.getElementById('emailIn').value.trim();
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  document.getElementById('nameErr').style.display=name?'none':'block';
+  document.getElementById('emailErr').style.display=emailOk?'none':'block';
+  if(!name||!emailOk)return;
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.textContent='Saving…';
+  if(SHEET_URL&&SHEET_URL!=='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+    try{
+      var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
+      await fetch(SHEET_URL+'?name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&timestamp='+encodeURIComponent(ts)+'&choices='+encodeURIComponent(buildSummary()),{method:'GET',mode:'no-cors'});
+    }catch(e){}
+  }
+  closeModal();
+  document.getElementById('pgUpload').style.display='none';
+  document.getElementById('pgResults').style.display='block';
+  document.getElementById('origImg').src=imageDataURL;
+  document.getElementById('resSummary').textContent=buildSummary();
+  document.getElementById('resultsSub').textContent='Based on your choices: '+buildSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+  generate();
+}
+
+async function generate(){
+  document.getElementById('loadBox').style.display='block';
+  document.getElementById('errBox').style.display='none';
+  document.getElementById('resBox').style.display='none';
+  var status=document.getElementById('loadStatus');
+  try{
+    status.textContent='Preparing your image…';
+
+    // Load the image to get its dimensions for the mask
+    var img=new Image();
+    img.src=imageDataURL;
+    await new Promise(function(resolve){img.onload=resolve;});
+
+    // Generate mask based on image dimensions
+    var maskBase64=generateMask(img.width,img.height);
+
+    status.textContent='Sending to AI…';
+
+    var res=await fetch(PROXY_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        imageBase64:imageBase64,
+        maskBase64:maskBase64,
+        imageMime:imageMime,
+        prompt:buildPrompt()
+      })
+    });
+
+    var data=await res.json();
+    if(!res.ok)throw new Error(data.error||JSON.stringify(data));
+    if(!data.data||data.data.length===0)throw new Error('No images returned. Please try again.');
+    var urls=data.data.slice(0,4).map(function(i){return i.url;});
+    while(urls.length<4)urls.push(urls[0]);
+    document.getElementById('r1').src=urls[0];
+    document.getElementById('r2').src=urls[1];
+    document.getElementById('r3').src=urls[2];
+    document.getElementById('r4').src=urls[3];
+    document.getElementById('loadBox').style.display='none';
+    document.getElementById('resBox').style.display='block';
+  }catch(err){
+    console.error(err);
+    document.getElementById('loadBox').style.display='none';
+    document.getElementById('errBox').style.display='block';
+    document.getElementById('errMsg').textContent=err.message||'Something went wrong. Please try again.';
+  }
+}
+</script>
+</body>
+</html>
