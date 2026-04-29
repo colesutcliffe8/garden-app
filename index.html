@@ -1,6 +1,3 @@
-Here it is — copy everything between the triple backticks:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -378,14 +375,16 @@ function checkCanGenerate() {
 
 function buildPrompt() {
   var parts = [
-    'A photorealistic garden transformation of the exact same outdoor space shown in the reference image.',
-    'Keep the same camera angle, perspective, boundaries, walls, and fencing.',
-    'The garden has been professionally landscaped to a ' + selectedBudget + ' standard.'
+    'Photorealistic professional garden design transformation.',
+    'This is the EXACT same garden space as the reference photo — identical overhead bird\'s eye view angle, same rectangular plot shape, same surrounding timber fence panels and walls, same neighbouring rooftops and buildings visible beyond the fence.',
+    'Do NOT change the viewpoint, camera angle or plot boundaries. The fences and walls must look identical.',
+    'The overgrown weedy grass, dandelions and straggly plants have been completely cleared and replaced with a stunning professionally landscaped garden.',
+    'Budget level: ' + selectedBudget + '.',
   ];
-  if (selectedBudgetDesc) parts.push('Budget scope includes: ' + selectedBudgetDesc + '.');
-  if (selectedStyles.length > 0) parts.push('Style: ' + selectedStyles.join(', ') + '.');
-  if (selectedFeatures.length > 0) parts.push('Must include: ' + selectedFeatures.join(', ') + '.');
-  parts.push('Professional garden photography, natural daylight, beautifully finished, high quality materials, realistic and achievable result.');
+  if (selectedBudgetDesc) parts.push('Materials and features appropriate for this budget: ' + selectedBudgetDesc + '.');
+  if (selectedStyles.length > 0) parts.push('Design style: ' + selectedStyles.join(' and ') + '.');
+  if (selectedFeatures.length > 0) parts.push('The finished garden must clearly include: ' + selectedFeatures.join(', ') + '.');
+  parts.push('Viewed from above looking down into the enclosed garden. Bright natural daylight. Immaculate finish. Realistic achievable result. Professional landscaping photography.');
   return parts.join(' ');
 }
 
@@ -447,7 +446,7 @@ async function generate() {
     var enc = new TextEncoder();
     var parts = [
       enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_request"\r\n\r\n' + imageRequest + '\r\n'),
-      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n80\r\n'),
+      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n95\r\n'),
       enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_file"; filename="garden.' + ext + '"\r\nContent-Type: ' + imageMime + '\r\n\r\n'),
       bytes,
       enc.encode('\r\n--' + boundary + '--\r\n')
@@ -479,4 +478,3 @@ async function generate() {
 </script>
 </body>
 </html>
-```
