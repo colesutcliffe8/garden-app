@@ -350,16 +350,15 @@ function checkCanGenerate(){
 
 function buildPrompt(){
   var p=[
-    'Photorealistic professional garden design transformation.',
-    'This is the EXACT same garden space as the reference photo — identical overhead birds eye view angle, same rectangular plot shape, same surrounding timber fence panels and walls, same neighbouring rooftops and buildings visible beyond the fence.',
-    'Do NOT change the viewpoint, camera angle or plot boundaries. The fences and walls must look identical.',
-    'The overgrown weedy grass, dandelions and plants have been completely cleared and replaced with a stunning professionally landscaped garden.',
-    'Budget level: '+selectedBudget+'.'
+    'IMPORTANT: This is a garden transformation of the EXACT photo provided. You must preserve everything outside the garden fence completely unchanged — the surrounding buildings, rooftops, sky, walls, neighbouring properties, roads and everything beyond the fence line must remain pixel-perfect identical to the original photo.',
+    'ONLY change what is inside the garden fence. Do not alter the fence itself, the camera angle, the perspective, the lighting of the surroundings, or anything outside the enclosed garden area.',
+    'Inside the garden: replace all overgrown weeds, grass and plants with a beautifully landscaped professional garden design.',
+    'Budget: '+selectedBudget+'.'
   ];
-  if(selectedBudgetDesc)p.push('Materials and features for this budget: '+selectedBudgetDesc+'.');
-  if(selectedStyles.length>0)p.push('Design style: '+selectedStyles.join(' and ')+'.');
-  if(selectedFeatures.length>0)p.push('The finished garden must clearly include: '+selectedFeatures.join(', ')+'.');
-  p.push('Viewed from above looking down into the enclosed garden. Bright natural daylight. Immaculate finish. Realistic achievable result. Professional landscaping photography.');
+  if(selectedBudgetDesc)p.push('Features appropriate for this budget: '+selectedBudgetDesc+'.');
+  if(selectedStyles.length>0)p.push('Garden style: '+selectedStyles.join(' and ')+'.');
+  if(selectedFeatures.length>0)p.push('The new garden design must include: '+selectedFeatures.join(', ')+'.');
+  p.push('The result must look like a real photograph taken from the same position as the original — same angle, same surroundings, only the garden interior has changed. Natural daylight. Photorealistic. Professional finish.');
   return p.join(' ');
 }
 
