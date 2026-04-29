@@ -1,3 +1,6 @@
+Here it is — copy everything between the triple backticks:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green: #1E4620;
-      --green-dark: #163618;
-      --green-light: #2a5e2d;
-      --gold: #C9A856;
-      --gold-light: #e0c47a;
-      --cream: #FAF6EF;
-      --cream-dark: #f0e9dc;
-      --text: #1a1a1a;
-      --text-muted: #6b7280;
-      --white: #ffffff;
-      --red: #ef4444;
-      --shadow: 0 20px 60px rgba(0,0,0,0.12);
-      --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
+      --green: #1E4620; --green-dark: #163618; --green-light: #2a5e2d;
+      --gold: #C9A856; --cream: #FAF6EF; --cream-dark: #f0e9dc;
+      --text: #1a1a1a; --text-muted: #6b7280; --white: #ffffff; --red: #ef4444;
+      --shadow: 0 20px 60px rgba(0,0,0,0.12); --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--cream); min-height: 100vh; color: var(--text); }
@@ -31,17 +25,19 @@
     .header p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 520px; margin: 0 auto 36px; line-height: 1.7; font-weight: 300; }
     .stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
     .stat-val { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--gold); }
-    .stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 3px; font-weight: 400; }
-    .card-wrap { max-width: 620px; margin: -24px auto 56px; padding: 0 20px; position: relative; z-index: 10; }
+    .stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 3px; }
+    .card-wrap { max-width: 680px; margin: -24px auto 56px; padding: 0 20px; position: relative; z-index: 10; }
     .card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); padding: 36px; }
-    .step-row { display: flex; gap: 14px; margin-bottom: 22px; align-items: flex-start; }
+    .step-row { display: flex; gap: 14px; margin-bottom: 8px; align-items: flex-start; }
     .step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: var(--white); font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
     .step-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
     .step-sub { font-size: 0.82rem; color: var(--text-muted); }
-    .dropzone { border: 2px dashed #d1d5db; border-radius: 14px; padding: 48px 24px; text-align: center; cursor: pointer; transition: all 0.25s ease; margin-top: 14px; background: #fafafa; }
+    .step-block { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #f3f4f6; }
+    .step-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .dropzone { border: 2px dashed #d1d5db; border-radius: 14px; padding: 40px 24px; text-align: center; cursor: pointer; transition: all 0.25s ease; margin-top: 14px; background: #fafafa; }
     .dropzone:hover, .dropzone.over { border-color: var(--green); background: rgba(30,70,32,0.03); }
     .dz-icon { width: 52px; height: 52px; margin: 0 auto 14px; background: var(--cream-dark); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
-    .dropzone h4 { font-size: 0.97rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .dropzone h4 { font-size: 0.97rem; font-weight: 600; margin-bottom: 4px; }
     .dropzone p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; }
     .choose-btn { display: inline-block; border: 1.5px solid var(--green); color: var(--green); background: var(--white); font-size: 0.84rem; font-weight: 600; padding: 9px 24px; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
     .choose-btn:hover { background: var(--green); color: var(--white); }
@@ -49,7 +45,28 @@
     .preview-wrap { margin-top: 20px; display: none; }
     .preview-wrap img { width: 100%; border-radius: 12px; border: 1px solid #e5e7eb; display: block; }
     .remove-btn { background: none; border: none; color: var(--red); font-size: 0.82rem; cursor: pointer; margin-top: 8px; text-decoration: underline; font-family: inherit; }
-    .gen-btn { width: 100%; margin-top: 22px; background: var(--green); color: var(--white); border: none; padding: 17px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s, transform 0.1s; display: none; align-items: center; justify-content: center; gap: 8px; }
+    .budget-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+    .budget-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; }
+    .budget-card:hover { border-color: var(--green); background: rgba(30,70,32,0.02); }
+    .budget-card.selected { border-color: var(--green); background: rgba(30,70,32,0.05); }
+    .budget-card.selected .bc-price { color: var(--green); }
+    .bc-emoji { font-size: 1.4rem; margin-bottom: 6px; }
+    .bc-price { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 3px; transition: color 0.2s; }
+    .bc-label { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+    .style-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .style-pill { border: 1.5px solid #e5e7eb; border-radius: 999px; padding: 8px 18px; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all 0.2s; background: #fafafa; user-select: none; }
+    .style-pill:hover { border-color: var(--green); }
+    .style-pill.selected { border-color: var(--green); background: var(--green); color: var(--white); }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .feature-item { display: flex; align-items: center; gap: 10px; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 11px 14px; cursor: pointer; transition: all 0.2s; background: #fafafa; user-select: none; }
+    .feature-item:hover { border-color: var(--green); }
+    .feature-item.selected { border-color: var(--green); background: rgba(30,70,32,0.04); }
+    .feature-cb { width: 18px; height: 18px; border: 2px solid #d1d5db; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.7rem; color: var(--white); }
+    .feature-item.selected .feature-cb { background: var(--green); border-color: var(--green); }
+    .feature-item.selected .feature-cb::after { content: '✓'; }
+    .feature-emoji { font-size: 1rem; }
+    .feature-name { font-size: 0.83rem; font-weight: 500; }
+    .gen-btn { width: 100%; margin-top: 28px; background: var(--green); color: var(--white); border: none; padding: 17px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s, transform 0.1s; display: none; align-items: center; justify-content: center; gap: 8px; }
     .gen-btn:hover { background: var(--green-dark); }
     .gen-btn:active { transform: scale(0.99); }
     .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 999; padding: 16px; backdrop-filter: blur(4px); }
@@ -84,11 +101,12 @@
     .err-box p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
     .retry-btn { background: var(--green); color: var(--white); border: none; padding: 11px 28px; border-radius: 8px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .res-box { background: var(--white); border-radius: 18px; box-shadow: var(--shadow-sm); padding: 36px; display: none; }
-    .res-box h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; text-align: center; margin-bottom: 28px; }
+    .res-box h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; text-align: center; margin-bottom: 8px; }
+    .res-summary { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 28px; }
     .lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; text-align: center; margin-bottom: 12px; }
     .lbl-orig { color: var(--text-muted); }
-    .lbl-gen { color: var(--green); }
-    .orig-img { width: 100%; max-width: 600px; display: block; margin: 0 auto 32px; border-radius: 12px; border: 1px solid #e5e7eb; }
+    .lbl-gen { color: var(--green); margin-top: 28px; }
+    .orig-img { width: 100%; max-width: 600px; display: block; margin: 0 auto 8px; border-radius: 12px; border: 1px solid #e5e7eb; }
     .grid4 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .grid4 img { width: 100%; border-radius: 12px; border: 2px solid rgba(201,168,86,0.4); display: block; }
     .cta { margin-top: 40px; padding-top: 32px; border-top: 1px solid #f3f4f6; text-align: center; }
@@ -97,9 +115,9 @@
     .cta-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
     .btn-call { background: var(--green); color: var(--white); padding: 14px 34px; border-radius: 10px; font-weight: 600; font-size: 0.93rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
     .btn-call:hover { background: var(--green-dark); }
-    .btn-email { background: var(--white); color: var(--green); border: 1.5px solid var(--green); padding: 14px 34px; border-radius: 10px; font-weight: 600; font-size: 0.93rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
+    .btn-email { background: var(--white); color: var(--green); border: 1.5px solid var(--green); padding: 14px 34px; border-radius: 10px; font-weight: 600; font-size: 0.93rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
     .btn-email:hover { background: rgba(30,70,32,0.04); }
-    @media (max-width: 580px) { .card { padding: 22px; } .card-wrap { margin-top: -16px; } .grid4 { grid-template-columns: 1fr; } .results-wrap { padding: 28px 14px; } }
+    @media (max-width: 580px) { .card { padding: 22px; } .card-wrap { margin-top: -16px; } .budget-grid { grid-template-columns: 1fr 1fr; } .feature-grid { grid-template-columns: 1fr; } .grid4 { grid-template-columns: 1fr; } .results-wrap { padding: 28px 14px; } }
   </style>
 </head>
 <body>
@@ -107,44 +125,118 @@
 <div id="pgUpload">
   <header class="header">
     <div class="badge">FREE INSTANT TOOL</div>
-    <h1>See exactly what your <em>garden could look like</em></h1>
-    <p>Upload a photo of your garden and our AI will show you how it looks completely cleared — your blank canvas for a brand new design.</p>
+    <h1>See exactly what your <em>dream garden</em> could look like</h1>
+    <p>Upload a photo, tell us what you want, and our AI generates a realistic vision of your new garden.</p>
     <div class="stats">
       <div><div class="stat-val">Realistic</div><div class="stat-lbl">True to your space</div></div>
-      <div><div class="stat-val">Accurate</div><div class="stat-lbl">Same layout & angle</div></div>
+      <div><div class="stat-val">Personalised</div><div class="stat-lbl">Built around your choices</div></div>
       <div><div class="stat-val">Instant</div><div class="stat-lbl">Results in seconds</div></div>
     </div>
   </header>
+
   <div class="card-wrap">
     <div class="card">
-      <div class="step-row">
-        <div class="step-num">1</div>
-        <div>
-          <div class="step-title">Upload your garden photo</div>
-          <div class="step-sub">Any angle works — front, back, patio or side return</div>
+
+      <div class="step-block">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Upload your garden photo</div>
+            <div class="step-sub">Any angle works — front, back, patio or side return</div>
+          </div>
+        </div>
+        <div id="dropzone" class="dropzone">
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" style="display:none">
+          <div class="dz-icon">📷</div>
+          <h4>Drop your photo here</h4>
+          <p>JPG, PNG or WEBP · max 10MB</p>
+          <button class="choose-btn" id="chooseBtn" type="button">Choose file</button>
+          <div class="dz-note">Processed privately · never stored permanently</div>
+        </div>
+        <div id="previewWrap" class="preview-wrap">
+          <img id="previewImg" src="" alt="Your garden">
+          <button class="remove-btn" onclick="clearImage()">✕ Remove photo</button>
         </div>
       </div>
-      <div id="dropzone" class="dropzone">
-        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" style="display:none">
-        <div class="dz-icon">📷</div>
-        <h4>Drop your photo here</h4>
-        <p>JPG, PNG or WEBP · max 10MB</p>
-        <button class="choose-btn" id="chooseBtn" type="button">Choose file</button>
-        <div class="dz-note">Processed privately · never stored permanently</div>
+
+      <div class="step-block" id="step2Block" style="opacity:0.4; pointer-events:none;">
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">What's your rough budget?</div>
+            <div class="step-sub">This helps us show you what's realistic for your space</div>
+          </div>
+        </div>
+        <div class="budget-grid">
+          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, a small lawn, basic planting, minimal features')">
+            <div class="bc-emoji">💰</div>
+            <div class="bc-price">Under £5k</div>
+            <div class="bc-label">Simple refresh — paving, gravel, basic planting</div>
+          </div>
+          <div class="budget-card" onclick="selectBudget(this,'mid-range','quality patio, decking or artificial lawn, feature planting, garden lighting, raised beds')">
+            <div class="bc-emoji">💰💰</div>
+            <div class="bc-price">£5k – £15k</div>
+            <div class="bc-label">Full redesign — decking, patio, planting, lighting</div>
+          </div>
+          <div class="budget-card" onclick="selectBudget(this,'premium','large natural stone patio, bespoke decking, water features, outdoor kitchen, garden room, premium lighting system, mature trees')">
+            <div class="bc-emoji">💰💰💰</div>
+            <div class="bc-price">£15k+</div>
+            <div class="bc-label">Premium transformation — full luxury build</div>
+          </div>
+        </div>
       </div>
-      <div id="previewWrap" class="preview-wrap">
-        <img id="previewImg" src="" alt="Your garden preview">
-        <button class="remove-btn" onclick="clearImage()">✕ Remove photo</button>
+
+      <div class="step-block" id="step3Block" style="opacity:0.4; pointer-events:none;">
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">What style are you going for?</div>
+            <div class="step-sub">Pick one or more that match your vision</div>
+          </div>
+        </div>
+        <div class="style-grid">
+          <div class="style-pill" onclick="toggleStyle(this,'low maintenance, clean lines, gravel or bark mulch, minimal upkeep planting, evergreen shrubs')">🌿 Low Maintenance</div>
+          <div class="style-pill" onclick="toggleStyle(this,'family friendly, safe soft lawn, play area, open space for children, durable surfaces')">👨‍👩‍👧 Family Friendly</div>
+          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary, sleek lines, large format porcelain paving, architectural plants, minimal palette')">🏙️ Modern / Contemporary</div>
+          <div class="style-pill" onclick="toggleStyle(this,'cottage garden, natural, lush mixed planting, colourful flowers, informal paths, rustic materials')">🌸 Cottage / Natural</div>
+          <div class="style-pill" onclick="toggleStyle(this,'entertainment space, outdoor dining area, seating zones, fire pit or fireplace, ambient lighting')">🥂 Entertainment Space</div>
+        </div>
       </div>
-      <button class="gen-btn" id="genBtn" onclick="openModal()">🌿 Generate My Empty Garden View</button>
+
+      <div class="step-block" id="step4Block" style="opacity:0.4; pointer-events:none;">
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">What do you want included?</div>
+            <div class="step-sub">Tick everything you'd like in your new garden</div>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-item" onclick="toggleFeature(this,'natural stone or porcelain patio')"><div class="feature-cb"></div><span class="feature-emoji">🪨</span><span class="feature-name">Patio</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'timber or composite decking')"><div class="feature-cb"></div><span class="feature-emoji">🪵</span><span class="feature-name">Decking</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'lush green lawn')"><div class="feature-cb"></div><span class="feature-emoji">🌱</span><span class="feature-name">Lawn</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting including path lights and spotlights')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'raised planters and flower beds')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds / Planters</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'garden fencing or screening panels')"><div class="feature-cb"></div><span class="feature-emoji">🪜</span><span class="feature-name">Fencing / Screening</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'water feature or pond')"><div class="feature-cb"></div><span class="feature-emoji">💧</span><span class="feature-name">Water Feature</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor seating area with furniture')"><div class="feature-cb"></div><span class="feature-emoji">🪑</span><span class="feature-name">Seating Area</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'fire pit or outdoor fireplace')"><div class="feature-cb"></div><span class="feature-emoji">🔥</span><span class="feature-name">Fire Pit</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'garden shed or storage')"><div class="feature-cb"></div><span class="feature-emoji">🏠</span><span class="feature-name">Shed / Storage</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'vegetable patch or kitchen garden')"><div class="feature-cb"></div><span class="feature-emoji">🥦</span><span class="feature-name">Veg Patch</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor kitchen or BBQ area')"><div class="feature-cb"></div><span class="feature-emoji">🍖</span><span class="feature-name">Outdoor Kitchen / BBQ</span></div>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="genBtn" onclick="openModal()">🌿 Generate My Dream Garden</button>
+
     </div>
   </div>
 </div>
 
 <div id="modal" class="modal-bg">
   <div class="modal-box">
-    <h3>Almost done! 🎉</h3>
-    <p class="modal-sub">Enter your details to unlock your free AI-cleared garden views.</p>
+    <h3>Almost there! 🎉</h3>
+    <p class="modal-sub">Enter your details to unlock your personalised garden visualisation.</p>
     <div class="field">
       <label>Your Name</label>
       <input type="text" id="nameIn" placeholder="e.g. John Smith" autocomplete="name">
@@ -164,13 +256,13 @@
 <div id="pgResults">
   <div class="results-wrap">
     <div class="results-hdr">
-      <h1>✨ Your Garden Transformation</h1>
-      <p>Your garden completely cleared — the blank canvas for your perfect new design.</p>
+      <h1>✨ Your Dream Garden</h1>
+      <p id="resultsSub">Here's what your garden could look like based on your choices.</p>
     </div>
     <div id="loadBox" class="load-box">
       <div class="spinner"></div>
-      <h3>Generating your cleared garden…</h3>
-      <p>Our AI is processing your photo. This takes around 20–40 seconds.</p>
+      <h3>Generating your garden…</h3>
+      <p>Our AI is building your personalised garden. This takes around 20–40 seconds.</p>
       <div class="load-status" id="loadStatus">Preparing your image…</div>
     </div>
     <div id="errBox" class="err-box">
@@ -179,10 +271,11 @@
       <button class="retry-btn" onclick="generate()">Try Again</button>
     </div>
     <div id="resBox" class="res-box">
-      <h2>Before &amp; After: Cleared View</h2>
-      <div class="lbl lbl-orig">Your Original Garden</div>
+      <h2>Your Garden Transformation</h2>
+      <p class="res-summary" id="resSummary"></p>
+      <div class="lbl lbl-orig">Your Garden Now</div>
       <img id="origImg" src="" alt="Original garden" class="orig-img">
-      <div class="lbl lbl-gen">AI-Generated Cleared Views</div>
+      <div class="lbl lbl-gen">AI-Generated Versions of Your New Garden</div>
       <div class="grid4">
         <img id="r1" src="" alt="View 1">
         <img id="r2" src="" alt="View 2">
@@ -190,8 +283,8 @@
         <img id="r4" src="" alt="View 4">
       </div>
       <div class="cta">
-        <h3>See the potential now?</h3>
-        <p>This blank space is where we build exactly what you want — patios, decking, lawns, planting, lighting and seating areas. We can turn this into your dream garden.</p>
+        <h3>Ready to make this a reality?</h3>
+        <p>Get in touch and we'll turn your AI vision into your actual garden. Free consultation, no obligation.</p>
         <div class="cta-btns">
           <a href="tel:YOUR-PHONE-NUMBER" class="btn-call">📞 Call Us Now</a>
           <a href="mailto:YOUR-EMAIL@YOURDOMAIN.COM" class="btn-email">✉️ Email Us</a>
@@ -204,7 +297,12 @@
 <script>
 var SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 var PROXY_URL = '/.netlify/functions/generate';
+
 var imageDataURL = null, imageBase64 = null, imageMime = null;
+var selectedBudget = null, selectedBudgetDesc = '';
+var selectedStyles = [];
+var selectedFeatures = [];
+
 var dz = document.getElementById('dropzone');
 var fi = document.getElementById('fileInput');
 
@@ -212,8 +310,8 @@ document.getElementById('chooseBtn').addEventListener('click', function(e) { e.s
 dz.addEventListener('click', function() { fi.click(); });
 dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('over'); });
 dz.addEventListener('dragleave', function() { dz.classList.remove('over'); });
-dz.addEventListener('drop', function(e) { e.preventDefault(); dz.classList.remove('over'); if(e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
-fi.addEventListener('change', function() { if(fi.files[0]) loadFile(fi.files[0]); });
+dz.addEventListener('drop', function(e) { e.preventDefault(); dz.classList.remove('over'); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+fi.addEventListener('change', function() { if (fi.files[0]) loadFile(fi.files[0]); });
 
 function loadFile(file) {
   if (!file.type.match(/image\/(jpeg|png|webp)/)) { alert('Please upload a JPG, PNG or WEBP image.'); return; }
@@ -225,8 +323,9 @@ function loadFile(file) {
     imageBase64 = imageDataURL.split(',')[1];
     document.getElementById('previewImg').src = imageDataURL;
     document.getElementById('previewWrap').style.display = 'block';
-    document.getElementById('genBtn').style.display = 'flex';
     dz.style.display = 'none';
+    document.getElementById('step2Block').style.opacity = '1';
+    document.getElementById('step2Block').style.pointerEvents = 'auto';
   };
   reader.readAsDataURL(file);
 }
@@ -235,14 +334,76 @@ function clearImage() {
   imageDataURL = null; imageBase64 = null; imageMime = null; fi.value = '';
   document.getElementById('previewImg').src = '';
   document.getElementById('previewWrap').style.display = 'none';
-  document.getElementById('genBtn').style.display = 'none';
   dz.style.display = '';
+  document.getElementById('step2Block').style.opacity = '0.4';
+  document.getElementById('step2Block').style.pointerEvents = 'none';
+  document.getElementById('step3Block').style.opacity = '0.4';
+  document.getElementById('step3Block').style.pointerEvents = 'none';
+  document.getElementById('step4Block').style.opacity = '0.4';
+  document.getElementById('step4Block').style.pointerEvents = 'none';
+  document.getElementById('genBtn').style.display = 'none';
+  selectedBudget = null;
 }
 
-function openModal() { document.getElementById('modal').classList.add('open'); setTimeout(function() { document.getElementById('nameIn').focus(); }, 80); }
+function selectBudget(el, label, desc) {
+  document.querySelectorAll('.budget-card').forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedBudget = label;
+  selectedBudgetDesc = desc;
+  document.getElementById('step3Block').style.opacity = '1';
+  document.getElementById('step3Block').style.pointerEvents = 'auto';
+  document.getElementById('step4Block').style.opacity = '1';
+  document.getElementById('step4Block').style.pointerEvents = 'auto';
+  checkCanGenerate();
+}
+
+function toggleStyle(el, desc) {
+  el.classList.toggle('selected');
+  if (el.classList.contains('selected')) { selectedStyles.push(desc); }
+  else { selectedStyles = selectedStyles.filter(function(s) { return s !== desc; }); }
+  checkCanGenerate();
+}
+
+function toggleFeature(el, desc) {
+  el.classList.toggle('selected');
+  if (el.classList.contains('selected')) { selectedFeatures.push(desc); }
+  else { selectedFeatures = selectedFeatures.filter(function(f) { return f !== desc; }); }
+  checkCanGenerate();
+}
+
+function checkCanGenerate() {
+  var canGo = imageBase64 && selectedBudget && (selectedStyles.length > 0 || selectedFeatures.length > 0);
+  document.getElementById('genBtn').style.display = canGo ? 'flex' : 'none';
+}
+
+function buildPrompt() {
+  var parts = [
+    'A photorealistic garden transformation of the exact same outdoor space shown in the reference image.',
+    'Keep the same camera angle, perspective, boundaries, walls, and fencing.',
+    'The garden has been professionally landscaped to a ' + selectedBudget + ' standard.'
+  ];
+  if (selectedBudgetDesc) parts.push('Budget scope includes: ' + selectedBudgetDesc + '.');
+  if (selectedStyles.length > 0) parts.push('Style: ' + selectedStyles.join(', ') + '.');
+  if (selectedFeatures.length > 0) parts.push('Must include: ' + selectedFeatures.join(', ') + '.');
+  parts.push('Professional garden photography, natural daylight, beautifully finished, high quality materials, realistic and achievable result.');
+  return parts.join(' ');
+}
+
+function buildSummary() {
+  var bits = [];
+  if (selectedBudget) bits.push(selectedBudget + ' budget');
+  if (selectedStyles.length > 0) bits.push(selectedStyles.map(function(s) { return s.split(',')[0]; }).join(', '));
+  if (selectedFeatures.length > 0) bits.push(selectedFeatures.join(', '));
+  return bits.join(' · ');
+}
+
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  setTimeout(function() { document.getElementById('nameIn').focus(); }, 80);
+}
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
-document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
-document.addEventListener('keydown', function(e) { if(e.key==='Enter' && document.getElementById('modal').classList.contains('open')) submitLead(); });
+document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Enter' && document.getElementById('modal').classList.contains('open')) submitLead(); });
 
 async function submitLead() {
   var name = document.getElementById('nameIn').value.trim();
@@ -250,20 +411,21 @@ async function submitLead() {
   var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   document.getElementById('nameErr').style.display = name ? 'none' : 'block';
   document.getElementById('emailErr').style.display = emailOk ? 'none' : 'block';
-  document.getElementById('modalErr').style.display = 'none';
   if (!name || !emailOk) return;
   var btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Saving…';
   if (SHEET_URL && SHEET_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
     try {
       var ts = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
-      await fetch(SHEET_URL + '?name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email) + '&timestamp=' + encodeURIComponent(ts), { method: 'GET', mode: 'no-cors' });
+      await fetch(SHEET_URL + '?name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email) + '&timestamp=' + encodeURIComponent(ts) + '&choices=' + encodeURIComponent(buildSummary()), { method: 'GET', mode: 'no-cors' });
     } catch(e) {}
   }
   closeModal();
   document.getElementById('pgUpload').style.display = 'none';
   document.getElementById('pgResults').style.display = 'block';
   document.getElementById('origImg').src = imageDataURL;
+  document.getElementById('resSummary').textContent = buildSummary();
+  document.getElementById('resultsSub').textContent = 'Based on your choices: ' + buildSummary();
   window.scrollTo({ top: 0, behavior: 'smooth' });
   generate();
 }
@@ -274,12 +436,10 @@ async function generate() {
   document.getElementById('resBox').style.display = 'none';
   var status = document.getElementById('loadStatus');
   try {
-    status.textContent = 'Sending photo to Ideogram AI…';
+    status.textContent = 'Building your personalised prompt…';
+    var prompt = buildPrompt();
     var boundary = 'GardenBoundary' + Date.now();
-    var imageRequest = JSON.stringify({
-      prompt: "The exact same garden space but completely cleared and empty. All plants, furniture and objects removed. Only bare soil, ground and fixed structures like walls, fences and paths remain. Same camera angle. Photorealistic, natural daylight.",
-      model: "V_2", aspect_ratio: "ASPECT_4_3", magic_prompt_option: "OFF", num_samples: 4
-    });
+    var imageRequest = JSON.stringify({ prompt: prompt, model: 'V_2', aspect_ratio: 'ASPECT_4_3', magic_prompt_option: 'OFF', num_samples: 4 });
     var binary = atob(imageBase64);
     var bytes = new Uint8Array(binary.length);
     for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
@@ -287,7 +447,7 @@ async function generate() {
     var enc = new TextEncoder();
     var parts = [
       enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_request"\r\n\r\n' + imageRequest + '\r\n'),
-      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n50\r\n'),
+      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n80\r\n'),
       enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_file"; filename="garden.' + ext + '"\r\nContent-Type: ' + imageMime + '\r\n\r\n'),
       bytes,
       enc.encode('\r\n--' + boundary + '--\r\n')
@@ -296,7 +456,7 @@ async function generate() {
     var body = new Uint8Array(totalLen);
     var offset = 0;
     parts.forEach(function(p) { body.set(p, offset); offset += p.length; });
-    status.textContent = 'AI is clearing your garden…';
+    status.textContent = 'AI is designing your garden…';
     var res = await fetch(PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data; boundary=' + boundary }, body: body });
     var data = await res.json();
     if (!res.ok) throw new Error(data.error || JSON.stringify(data));
@@ -319,3 +479,4 @@ async function generate() {
 </script>
 </body>
 </html>
+```
