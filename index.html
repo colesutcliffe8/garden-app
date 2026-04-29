@@ -7,114 +7,113 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green: #1E4620; --green-dark: #163618; --green-light: #2a5e2d;
-      --gold: #C9A856; --cream: #FAF6EF; --cream-dark: #f0e9dc;
-      --text: #1a1a1a; --text-muted: #6b7280; --white: #ffffff; --red: #ef4444;
+      --green: #1E4620; --green-dark: #163618; --gold: #C9A856;
+      --cream: #FAF6EF; --cream-dark: #f0e9dc; --text: #1a1a1a;
+      --text-muted: #6b7280; --white: #fff; --red: #ef4444;
       --shadow: 0 20px 60px rgba(0,0,0,0.12); --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); min-height: 100vh; color: var(--text); }
-    .header { background: var(--green); background-image: radial-gradient(circle at 20% 50%, rgba(201,168,86,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(201,168,86,0.06) 0%, transparent 40%), radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: auto, auto, 22px 22px; color: var(--white); padding: 56px 24px 80px; text-align: center; position: relative; overflow: hidden; }
-    .header::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: var(--cream); clip-path: ellipse(55% 100% at 50% 100%); }
-    .badge { display: inline-block; background: rgba(201,168,86,0.18); color: var(--gold); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; padding: 5px 18px; border-radius: 999px; border: 1px solid rgba(201,168,86,0.3); margin-bottom: 24px; }
-    .header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 16px; max-width: 680px; margin-left: auto; margin-right: auto; }
-    .header h1 em { font-style: italic; color: var(--gold); }
-    .header p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 520px; margin: 0 auto 36px; line-height: 1.7; font-weight: 300; }
-    .stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-    .stat-val { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--gold); }
-    .stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 3px; }
-    .card-wrap { max-width: 680px; margin: -24px auto 56px; padding: 0 20px; position: relative; z-index: 10; }
-    .card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); padding: 36px; }
-    .step-row { display: flex; gap: 14px; margin-bottom: 8px; align-items: flex-start; }
-    .step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: var(--white); font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-    .step-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-    .step-sub { font-size: 0.82rem; color: var(--text-muted); }
-    .step-block { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #f3f4f6; }
-    .step-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .dropzone { border: 2px dashed #d1d5db; border-radius: 14px; padding: 40px 24px; text-align: center; cursor: pointer; transition: all 0.25s ease; margin-top: 14px; background: #fafafa; }
-    .dropzone:hover, .dropzone.over { border-color: var(--green); background: rgba(30,70,32,0.03); }
-    .dz-icon { width: 52px; height: 52px; margin: 0 auto 14px; background: var(--cream-dark); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
-    .dropzone h4 { font-size: 0.97rem; font-weight: 600; margin-bottom: 4px; }
-    .dropzone p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; }
-    .choose-btn { display: inline-block; border: 1.5px solid var(--green); color: var(--green); background: var(--white); font-size: 0.84rem; font-weight: 600; padding: 9px 24px; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
-    .choose-btn:hover { background: var(--green); color: var(--white); }
-    .dz-note { font-size: 0.72rem; color: #9ca3af; margin-top: 14px; }
-    .preview-wrap { margin-top: 20px; display: none; }
-    .preview-wrap img { width: 100%; border-radius: 12px; border: 1px solid #e5e7eb; display: block; }
-    .remove-btn { background: none; border: none; color: var(--red); font-size: 0.82rem; cursor: pointer; margin-top: 8px; text-decoration: underline; font-family: inherit; }
-    .budget-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
-    .budget-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; }
-    .budget-card:hover { border-color: var(--green); background: rgba(30,70,32,0.02); }
-    .budget-card.selected { border-color: var(--green); background: rgba(30,70,32,0.05); }
-    .budget-card.selected .bc-price { color: var(--green); }
-    .bc-emoji { font-size: 1.4rem; margin-bottom: 6px; }
-    .bc-price { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 3px; transition: color 0.2s; }
-    .bc-label { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
-    .style-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-    .style-pill { border: 1.5px solid #e5e7eb; border-radius: 999px; padding: 8px 18px; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all 0.2s; background: #fafafa; user-select: none; }
-    .style-pill:hover { border-color: var(--green); }
-    .style-pill.selected { border-color: var(--green); background: var(--green); color: var(--white); }
-    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-    .feature-item { display: flex; align-items: center; gap: 10px; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 11px 14px; cursor: pointer; transition: all 0.2s; background: #fafafa; user-select: none; }
-    .feature-item:hover { border-color: var(--green); }
-    .feature-item.selected { border-color: var(--green); background: rgba(30,70,32,0.04); }
-    .feature-cb { width: 18px; height: 18px; border: 2px solid #d1d5db; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.7rem; color: var(--white); }
-    .feature-item.selected .feature-cb { background: var(--green); border-color: var(--green); }
-    .feature-item.selected .feature-cb::after { content: '✓'; }
-    .feature-emoji { font-size: 1rem; }
-    .feature-name { font-size: 0.83rem; font-weight: 500; }
-    .gen-btn { width: 100%; margin-top: 28px; background: var(--green); color: var(--white); border: none; padding: 17px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s, transform 0.1s; display: none; align-items: center; justify-content: center; gap: 8px; }
-    .gen-btn:hover { background: var(--green-dark); }
-    .gen-btn:active { transform: scale(0.99); }
-    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 999; padding: 16px; backdrop-filter: blur(4px); }
-    .modal-bg.open { display: flex; }
-    .modal-box { background: var(--white); border-radius: 18px; padding: 36px; width: 100%; max-width: 420px; animation: popIn 0.22s ease; }
-    @keyframes popIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .modal-box h3 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-bottom: 6px; }
-    .modal-sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 26px; line-height: 1.6; }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; font-size: 0.75rem; font-weight: 700; color: #374151; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.07em; }
-    .field input { width: 100%; padding: 12px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 0.93rem; outline: none; font-family: inherit; transition: border-color 0.2s; }
-    .field input:focus { border-color: var(--green); }
-    .field-err { color: var(--red); font-size: 0.74rem; margin-top: 4px; display: none; }
-    .submit-btn { width: 100%; background: var(--green); color: var(--white); border: none; padding: 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: inherit; margin-top: 8px; transition: background 0.2s; }
-    .submit-btn:hover { background: var(--green-dark); }
-    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .modal-note { text-align: center; font-size: 0.72rem; color: #9ca3af; margin-top: 12px; }
-    .modal-err { color: var(--red); font-size: 0.78rem; text-align: center; margin-top: 8px; display: none; }
-    #pgResults { display: none; }
-    .results-wrap { max-width: 900px; margin: 0 auto; padding: 48px 20px; }
-    .results-hdr { text-align: center; margin-bottom: 32px; }
-    .results-hdr h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 8px; }
-    .results-hdr p { color: var(--text-muted); font-size: 0.95rem; }
-    .load-box { background: var(--white); border-radius: 18px; box-shadow: var(--shadow-sm); padding: 64px 24px; text-align: center; }
-    .spinner { width: 46px; height: 46px; border: 4px solid #e5e7eb; border-top-color: var(--green); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 24px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .load-box h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
-    .load-box p { color: #9ca3af; font-size: 0.87rem; }
-    .load-status { color: var(--green); font-size: 0.83rem; margin-top: 16px; font-weight: 500; }
-    .err-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: 16px; padding: 32px; text-align: center; display: none; }
-    .err-box h3 { color: #dc2626; font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-    .err-box p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
-    .retry-btn { background: var(--green); color: var(--white); border: none; padding: 11px 28px; border-radius: 8px; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .res-box { background: var(--white); border-radius: 18px; box-shadow: var(--shadow-sm); padding: 36px; display: none; }
-    .res-box h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; text-align: center; margin-bottom: 8px; }
-    .res-summary { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 28px; }
-    .lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; text-align: center; margin-bottom: 12px; }
-    .lbl-orig { color: var(--text-muted); }
-    .lbl-gen { color: var(--green); margin-top: 28px; }
-    .orig-img { width: 100%; max-width: 600px; display: block; margin: 0 auto 8px; border-radius: 12px; border: 1px solid #e5e7eb; }
-    .grid4 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .grid4 img { width: 100%; border-radius: 12px; border: 2px solid rgba(201,168,86,0.4); display: block; }
-    .cta { margin-top: 40px; padding-top: 32px; border-top: 1px solid #f3f4f6; text-align: center; }
-    .cta h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 10px; }
-    .cta p { color: var(--text-muted); font-size: 0.93rem; max-width: 500px; margin: 0 auto 28px; line-height: 1.7; }
-    .cta-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-    .btn-call { background: var(--green); color: var(--white); padding: 14px 34px; border-radius: 10px; font-weight: 600; font-size: 0.93rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
-    .btn-call:hover { background: var(--green-dark); }
-    .btn-email { background: var(--white); color: var(--green); border: 1.5px solid var(--green); padding: 14px 34px; border-radius: 10px; font-weight: 600; font-size: 0.93rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-    .btn-email:hover { background: rgba(30,70,32,0.04); }
-    @media (max-width: 580px) { .card { padding: 22px; } .card-wrap { margin-top: -16px; } .budget-grid { grid-template-columns: 1fr 1fr; } .feature-grid { grid-template-columns: 1fr; } .grid4 { grid-template-columns: 1fr; } .results-wrap { padding: 28px 14px; } }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;color:var(--text)}
+    .header{background:var(--green);background-image:radial-gradient(circle at 20% 50%,rgba(201,168,86,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(201,168,86,.06) 0%,transparent 40%),radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:auto,auto,22px 22px;color:#fff;padding:56px 24px 80px;text-align:center;position:relative;overflow:hidden}
+    .header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:var(--cream);clip-path:ellipse(55% 100% at 50% 100%)}
+    .badge{display:inline-block;background:rgba(201,168,86,.18);color:var(--gold);font-size:.7rem;font-weight:700;letter-spacing:.12em;padding:5px 18px;border-radius:999px;border:1px solid rgba(201,168,86,.3);margin-bottom:24px}
+    .header h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;margin-bottom:16px;max-width:680px;margin-left:auto;margin-right:auto}
+    .header h1 em{font-style:italic;color:var(--gold)}
+    .header p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:520px;margin:0 auto 36px;line-height:1.7;font-weight:300}
+    .stats{display:flex;flex-wrap:wrap;justify-content:center;gap:40px}
+    .stat-val{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--gold)}
+    .stat-lbl{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:3px}
+    .card-wrap{max-width:680px;margin:-24px auto 56px;padding:0 20px;position:relative;z-index:10}
+    .card{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:36px}
+    .step-row{display:flex;gap:14px;margin-bottom:8px;align-items:flex-start}
+    .step-num{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-size:.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .step-title{font-size:1rem;font-weight:600;margin-bottom:2px}
+    .step-sub{font-size:.82rem;color:var(--text-muted)}
+    .step-block{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #f3f4f6}
+    .step-block:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+    .dropzone{border:2px dashed #d1d5db;border-radius:14px;padding:40px 24px;text-align:center;cursor:pointer;transition:all .25s;margin-top:14px;background:#fafafa}
+    .dropzone:hover,.dropzone.over{border-color:var(--green);background:rgba(30,70,32,.03)}
+    .dz-icon{width:52px;height:52px;margin:0 auto 14px;background:var(--cream-dark);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+    .dropzone h4{font-size:.97rem;font-weight:600;margin-bottom:4px}
+    .dropzone p{font-size:.8rem;color:var(--text-muted);margin-bottom:16px}
+    .choose-btn{border:1.5px solid var(--green);color:var(--green);background:#fff;font-size:.84rem;font-weight:600;padding:9px 24px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s}
+    .choose-btn:hover{background:var(--green);color:#fff}
+    .dz-note{font-size:.72rem;color:#9ca3af;margin-top:14px}
+    .preview-wrap{margin-top:20px;display:none}
+    .preview-wrap img{width:100%;border-radius:12px;border:1px solid #e5e7eb;display:block}
+    .remove-btn{background:none;border:none;color:var(--red);font-size:.82rem;cursor:pointer;margin-top:8px;text-decoration:underline;font-family:inherit}
+    .budget-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .budget-card{border:2px solid #e5e7eb;border-radius:12px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;background:#fafafa}
+    .budget-card:hover{border-color:var(--green);background:rgba(30,70,32,.02)}
+    .budget-card.selected{border-color:var(--green);background:rgba(30,70,32,.05)}
+    .budget-card.selected .bc-price{color:var(--green)}
+    .bc-emoji{font-size:1.4rem;margin-bottom:6px}
+    .bc-price{font-weight:700;font-size:.9rem;margin-bottom:3px;transition:color .2s}
+    .bc-label{font-size:.72rem;color:var(--text-muted);line-height:1.4}
+    .style-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .style-pill{border:1.5px solid #e5e7eb;border-radius:999px;padding:8px 18px;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;background:#fafafa;user-select:none}
+    .style-pill:hover{border-color:var(--green)}
+    .style-pill.selected{border-color:var(--green);background:var(--green);color:#fff}
+    .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .feature-item{display:flex;align-items:center;gap:10px;border:1.5px solid #e5e7eb;border-radius:10px;padding:11px 14px;cursor:pointer;transition:all .2s;background:#fafafa;user-select:none}
+    .feature-item:hover{border-color:var(--green)}
+    .feature-item.selected{border-color:var(--green);background:rgba(30,70,32,.04)}
+    .feature-cb{width:18px;height:18px;border:2px solid #d1d5db;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.7rem;color:#fff}
+    .feature-item.selected .feature-cb{background:var(--green);border-color:var(--green)}
+    .feature-item.selected .feature-cb::after{content:'✓'}
+    .feature-emoji{font-size:1rem}
+    .feature-name{font-size:.83rem;font-weight:500}
+    .gen-btn{width:100%;margin-top:28px;background:var(--green);color:#fff;border:none;padding:17px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s,transform .1s;display:none;align-items:center;justify-content:center;gap:8px}
+    .gen-btn:hover{background:var(--green-dark)}
+    .gen-btn:active{transform:scale(.99)}
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999;padding:16px;backdrop-filter:blur(4px)}
+    .modal-bg.open{display:flex}
+    .modal-box{background:#fff;border-radius:18px;padding:36px;width:100%;max-width:420px;animation:popIn .22s ease}
+    @keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+    .modal-box h3{font-family:'DM Serif Display',serif;font-size:1.6rem;margin-bottom:6px}
+    .modal-sub{color:var(--text-muted);font-size:.88rem;margin-bottom:26px;line-height:1.6}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:.75rem;font-weight:700;color:#374151;margin-bottom:6px;text-transform:uppercase;letter-spacing:.07em}
+    .field input{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.93rem;outline:none;font-family:inherit;transition:border-color .2s}
+    .field input:focus{border-color:var(--green)}
+    .field-err{color:var(--red);font-size:.74rem;margin-top:4px;display:none}
+    .submit-btn{width:100%;background:var(--green);color:#fff;border:none;padding:14px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:background .2s}
+    .submit-btn:hover{background:var(--green-dark)}
+    .submit-btn:disabled{opacity:.5;cursor:not-allowed}
+    .modal-note{text-align:center;font-size:.72rem;color:#9ca3af;margin-top:12px}
+    #pgResults{display:none}
+    .results-wrap{max-width:900px;margin:0 auto;padding:48px 20px}
+    .results-hdr{text-align:center;margin-bottom:32px}
+    .results-hdr h1{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:8px}
+    .results-hdr p{color:var(--text-muted);font-size:.95rem}
+    .load-box{background:#fff;border-radius:18px;box-shadow:var(--shadow-sm);padding:64px 24px;text-align:center}
+    .spinner{width:46px;height:46px;border:4px solid #e5e7eb;border-top-color:var(--green);border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 24px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .load-box h3{font-size:1.05rem;font-weight:600;margin-bottom:8px}
+    .load-box p{color:#9ca3af;font-size:.87rem}
+    .load-status{color:var(--green);font-size:.83rem;margin-top:16px;font-weight:500}
+    .err-box{background:#fef2f2;border:1px solid #fecaca;border-radius:16px;padding:32px;text-align:center;display:none}
+    .err-box h3{color:#dc2626;font-size:1rem;font-weight:600;margin-bottom:8px}
+    .err-box p{color:var(--text-muted);font-size:.85rem;margin-bottom:18px}
+    .retry-btn{background:var(--green);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-weight:600;cursor:pointer;font-family:inherit}
+    .res-box{background:#fff;border-radius:18px;box-shadow:var(--shadow-sm);padding:36px;display:none}
+    .res-box h2{font-family:'DM Serif Display',serif;font-size:1.5rem;text-align:center;margin-bottom:8px}
+    .res-summary{text-align:center;color:var(--text-muted);font-size:.85rem;margin-bottom:28px}
+    .lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:12px}
+    .lbl-orig{color:var(--text-muted)}
+    .lbl-gen{color:var(--green);margin-top:28px}
+    .orig-img{width:100%;max-width:600px;display:block;margin:0 auto 8px;border-radius:12px;border:1px solid #e5e7eb}
+    .grid4{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .grid4 img{width:100%;border-radius:12px;border:2px solid rgba(201,168,86,.4);display:block}
+    .cta{margin-top:40px;padding-top:32px;border-top:1px solid #f3f4f6;text-align:center}
+    .cta h3{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:10px}
+    .cta p{color:var(--text-muted);font-size:.93rem;max-width:500px;margin:0 auto 28px;line-height:1.7}
+    .cta-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+    .btn-call{background:var(--green);color:#fff;padding:14px 34px;border-radius:10px;font-weight:600;font-size:.93rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .2s}
+    .btn-call:hover{background:var(--green-dark)}
+    .btn-email{background:#fff;color:var(--green);border:1.5px solid var(--green);padding:14px 34px;border-radius:10px;font-weight:600;font-size:.93rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .btn-email:hover{background:rgba(30,70,32,.04)}
+    @media(max-width:580px){.card{padding:22px}.card-wrap{margin-top:-16px}.budget-grid{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr}.grid4{grid-template-columns:1fr}.results-wrap{padding:28px 14px}}
   </style>
 </head>
 <body>
@@ -130,17 +129,13 @@
       <div><div class="stat-val">Instant</div><div class="stat-lbl">Results in seconds</div></div>
     </div>
   </header>
-
   <div class="card-wrap">
     <div class="card">
 
       <div class="step-block">
         <div class="step-row">
           <div class="step-num">1</div>
-          <div>
-            <div class="step-title">Upload your garden photo</div>
-            <div class="step-sub">Any angle works — front, back, patio or side return</div>
-          </div>
+          <div><div class="step-title">Upload your garden photo</div><div class="step-sub">Any angle works — front, back, patio or side return</div></div>
         </div>
         <div id="dropzone" class="dropzone">
           <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" style="display:none">
@@ -156,64 +151,52 @@
         </div>
       </div>
 
-      <div class="step-block" id="step2Block" style="opacity:0.4; pointer-events:none;">
+      <div class="step-block" id="step2Block" style="opacity:0.4;pointer-events:none">
         <div class="step-row">
           <div class="step-num">2</div>
-          <div>
-            <div class="step-title">What's your rough budget?</div>
-            <div class="step-sub">This helps us show you what's realistic for your space</div>
-          </div>
+          <div><div class="step-title">What's your rough budget?</div><div class="step-sub">This helps us show you what's realistic for your space</div></div>
         </div>
         <div class="budget-grid">
-          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, a small lawn, basic planting, minimal features')">
-            <div class="bc-emoji">💰</div>
-            <div class="bc-price">Under £5k</div>
+          <div class="budget-card" onclick="selectBudget(this,'budget-conscious','simple paving or gravel, small lawn, basic planting, minimal features')">
+            <div class="bc-emoji">💰</div><div class="bc-price">Under £5k</div>
             <div class="bc-label">Simple refresh — paving, gravel, basic planting</div>
           </div>
           <div class="budget-card" onclick="selectBudget(this,'mid-range','quality patio, decking or artificial lawn, feature planting, garden lighting, raised beds')">
-            <div class="bc-emoji">💰💰</div>
-            <div class="bc-price">£5k – £15k</div>
+            <div class="bc-emoji">💰💰</div><div class="bc-price">£5k – £15k</div>
             <div class="bc-label">Full redesign — decking, patio, planting, lighting</div>
           </div>
-          <div class="budget-card" onclick="selectBudget(this,'premium','large natural stone patio, bespoke decking, water features, outdoor kitchen, garden room, premium lighting system, mature trees')">
-            <div class="bc-emoji">💰💰💰</div>
-            <div class="bc-price">£15k+</div>
+          <div class="budget-card" onclick="selectBudget(this,'premium','large natural stone patio, bespoke decking, water features, outdoor kitchen, premium lighting, mature trees')">
+            <div class="bc-emoji">💰💰💰</div><div class="bc-price">£15k+</div>
             <div class="bc-label">Premium transformation — full luxury build</div>
           </div>
         </div>
       </div>
 
-      <div class="step-block" id="step3Block" style="opacity:0.4; pointer-events:none;">
+      <div class="step-block" id="step3Block" style="opacity:0.4;pointer-events:none">
         <div class="step-row">
           <div class="step-num">3</div>
-          <div>
-            <div class="step-title">What style are you going for?</div>
-            <div class="step-sub">Pick one or more that match your vision</div>
-          </div>
+          <div><div class="step-title">What style are you going for?</div><div class="step-sub">Pick one or more that match your vision</div></div>
         </div>
         <div class="style-grid">
-          <div class="style-pill" onclick="toggleStyle(this,'low maintenance, clean lines, gravel or bark mulch, minimal upkeep planting, evergreen shrubs')">🌿 Low Maintenance</div>
-          <div class="style-pill" onclick="toggleStyle(this,'family friendly, safe soft lawn, play area, open space for children, durable surfaces')">👨‍👩‍👧 Family Friendly</div>
-          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary, sleek lines, large format porcelain paving, architectural plants, minimal palette')">🏙️ Modern / Contemporary</div>
-          <div class="style-pill" onclick="toggleStyle(this,'cottage garden, natural, lush mixed planting, colourful flowers, informal paths, rustic materials')">🌸 Cottage / Natural</div>
-          <div class="style-pill" onclick="toggleStyle(this,'entertainment space, outdoor dining area, seating zones, fire pit or fireplace, ambient lighting')">🥂 Entertainment Space</div>
+          <div class="style-pill" onclick="toggleStyle(this,'low maintenance, clean lines, gravel or bark mulch, evergreen shrubs')">🌿 Low Maintenance</div>
+          <div class="style-pill" onclick="toggleStyle(this,'family friendly, safe soft lawn, play area, open space for children')">👨‍👩‍👧 Family Friendly</div>
+          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary, sleek lines, large format porcelain paving, architectural plants')">🏙️ Modern / Contemporary</div>
+          <div class="style-pill" onclick="toggleStyle(this,'cottage garden, natural, lush mixed planting, colourful flowers, rustic materials')">🌸 Cottage / Natural</div>
+          <div class="style-pill" onclick="toggleStyle(this,'entertainment space, outdoor dining area, seating zones, ambient lighting')">🥂 Entertainment Space</div>
         </div>
       </div>
 
-      <div class="step-block" id="step4Block" style="opacity:0.4; pointer-events:none;">
+      <div class="step-block" id="step4Block" style="opacity:0.4;pointer-events:none">
         <div class="step-row">
           <div class="step-num">4</div>
-          <div>
-            <div class="step-title">What do you want included?</div>
-            <div class="step-sub">Tick everything you'd like in your new garden</div>
-          </div>
+          <div><div class="step-title">What do you want included?</div><div class="step-sub">Tick everything you'd like in your new garden</div></div>
         </div>
         <div class="feature-grid">
           <div class="feature-item" onclick="toggleFeature(this,'natural stone or porcelain patio')"><div class="feature-cb"></div><span class="feature-emoji">🪨</span><span class="feature-name">Patio</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'timber or composite decking')"><div class="feature-cb"></div><span class="feature-emoji">🪵</span><span class="feature-name">Decking</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'lush green lawn')"><div class="feature-cb"></div><span class="feature-emoji">🌱</span><span class="feature-name">Lawn</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting including path lights and spotlights')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'raised planters and flower beds')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds / Planters</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting with path lights and spotlights')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'raised planters and flower beds')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'garden fencing or screening panels')"><div class="feature-cb"></div><span class="feature-emoji">🪜</span><span class="feature-name">Fencing / Screening</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'water feature or pond')"><div class="feature-cb"></div><span class="feature-emoji">💧</span><span class="feature-name">Water Feature</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'outdoor seating area with furniture')"><div class="feature-cb"></div><span class="feature-emoji">🪑</span><span class="feature-name">Seating Area</span></div>
@@ -225,7 +208,6 @@
       </div>
 
       <button class="gen-btn" id="genBtn" onclick="openModal()">🌿 Generate My Dream Garden</button>
-
     </div>
   </div>
 </div>
@@ -245,7 +227,6 @@
       <div class="field-err" id="emailErr">Please enter a valid email address.</div>
     </div>
     <button class="submit-btn" id="submitBtn" onclick="submitLead()">View My Results →</button>
-    <div class="modal-err" id="modalErr">Something went wrong. Please try again.</div>
     <div class="modal-note">🔒 We respect your privacy and will never share your details.</div>
   </div>
 </div>
@@ -292,187 +273,178 @@
 </div>
 
 <script>
-var SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-var PROXY_URL = '/.netlify/functions/generate';
+var SHEET_URL='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+var PROXY_URL='/.netlify/functions/generate';
+var imageDataURL=null,imageBase64=null,imageMime=null;
+var selectedBudget=null,selectedBudgetDesc='';
+var selectedStyles=[],selectedFeatures=[];
+var dz=document.getElementById('dropzone');
+var fi=document.getElementById('fileInput');
 
-var imageDataURL = null, imageBase64 = null, imageMime = null;
-var selectedBudget = null, selectedBudgetDesc = '';
-var selectedStyles = [];
-var selectedFeatures = [];
+document.getElementById('chooseBtn').addEventListener('click',function(e){e.stopPropagation();fi.click();});
+dz.addEventListener('click',function(){fi.click();});
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('over');});
+dz.addEventListener('dragleave',function(){dz.classList.remove('over');});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
+fi.addEventListener('change',function(){if(fi.files[0])loadFile(fi.files[0]);});
 
-var dz = document.getElementById('dropzone');
-var fi = document.getElementById('fileInput');
-
-document.getElementById('chooseBtn').addEventListener('click', function(e) { e.stopPropagation(); fi.click(); });
-dz.addEventListener('click', function() { fi.click(); });
-dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('over'); });
-dz.addEventListener('dragleave', function() { dz.classList.remove('over'); });
-dz.addEventListener('drop', function(e) { e.preventDefault(); dz.classList.remove('over'); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
-fi.addEventListener('change', function() { if (fi.files[0]) loadFile(fi.files[0]); });
-
-function loadFile(file) {
-  if (!file.type.match(/image\/(jpeg|png|webp)/)) { alert('Please upload a JPG, PNG or WEBP image.'); return; }
-  if (file.size > 10 * 1024 * 1024) { alert('Please use an image under 10MB.'); return; }
-  imageMime = file.type;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    imageDataURL = e.target.result;
-    imageBase64 = imageDataURL.split(',')[1];
-    document.getElementById('previewImg').src = imageDataURL;
-    document.getElementById('previewWrap').style.display = 'block';
-    dz.style.display = 'none';
-    document.getElementById('step2Block').style.opacity = '1';
-    document.getElementById('step2Block').style.pointerEvents = 'auto';
+function loadFile(file){
+  if(!file.type.match(/image\/(jpeg|png|webp)/)){alert('Please upload a JPG, PNG or WEBP image.');return;}
+  if(file.size>10*1024*1024){alert('Please use an image under 10MB.');return;}
+  imageMime=file.type;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    imageDataURL=e.target.result;
+    imageBase64=imageDataURL.split(',')[1];
+    document.getElementById('previewImg').src=imageDataURL;
+    document.getElementById('previewWrap').style.display='block';
+    dz.style.display='none';
+    document.getElementById('step2Block').style.opacity='1';
+    document.getElementById('step2Block').style.pointerEvents='auto';
   };
   reader.readAsDataURL(file);
 }
 
-function clearImage() {
-  imageDataURL = null; imageBase64 = null; imageMime = null; fi.value = '';
-  document.getElementById('previewImg').src = '';
-  document.getElementById('previewWrap').style.display = 'none';
-  dz.style.display = '';
-  document.getElementById('step2Block').style.opacity = '0.4';
-  document.getElementById('step2Block').style.pointerEvents = 'none';
-  document.getElementById('step3Block').style.opacity = '0.4';
-  document.getElementById('step3Block').style.pointerEvents = 'none';
-  document.getElementById('step4Block').style.opacity = '0.4';
-  document.getElementById('step4Block').style.pointerEvents = 'none';
-  document.getElementById('genBtn').style.display = 'none';
-  selectedBudget = null;
+function clearImage(){
+  imageDataURL=null;imageBase64=null;imageMime=null;fi.value='';
+  document.getElementById('previewImg').src='';
+  document.getElementById('previewWrap').style.display='none';
+  dz.style.display='';
+  ['step2Block','step3Block','step4Block'].forEach(function(id){
+    document.getElementById(id).style.opacity='0.4';
+    document.getElementById(id).style.pointerEvents='none';
+  });
+  document.getElementById('genBtn').style.display='none';
+  selectedBudget=null;
 }
 
-function selectBudget(el, label, desc) {
-  document.querySelectorAll('.budget-card').forEach(function(c) { c.classList.remove('selected'); });
+function selectBudget(el,label,desc){
+  document.querySelectorAll('.budget-card').forEach(function(c){c.classList.remove('selected');});
   el.classList.add('selected');
-  selectedBudget = label;
-  selectedBudgetDesc = desc;
-  document.getElementById('step3Block').style.opacity = '1';
-  document.getElementById('step3Block').style.pointerEvents = 'auto';
-  document.getElementById('step4Block').style.opacity = '1';
-  document.getElementById('step4Block').style.pointerEvents = 'auto';
+  selectedBudget=label;selectedBudgetDesc=desc;
+  ['step3Block','step4Block'].forEach(function(id){
+    document.getElementById(id).style.opacity='1';
+    document.getElementById(id).style.pointerEvents='auto';
+  });
   checkCanGenerate();
 }
 
-function toggleStyle(el, desc) {
+function toggleStyle(el,desc){
   el.classList.toggle('selected');
-  if (el.classList.contains('selected')) { selectedStyles.push(desc); }
-  else { selectedStyles = selectedStyles.filter(function(s) { return s !== desc; }); }
+  if(el.classList.contains('selected')){selectedStyles.push(desc);}
+  else{selectedStyles=selectedStyles.filter(function(s){return s!==desc;});}
   checkCanGenerate();
 }
 
-function toggleFeature(el, desc) {
+function toggleFeature(el,desc){
   el.classList.toggle('selected');
-  if (el.classList.contains('selected')) { selectedFeatures.push(desc); }
-  else { selectedFeatures = selectedFeatures.filter(function(f) { return f !== desc; }); }
+  if(el.classList.contains('selected')){selectedFeatures.push(desc);}
+  else{selectedFeatures=selectedFeatures.filter(function(f){return f!==desc;});}
   checkCanGenerate();
 }
 
-function checkCanGenerate() {
-  var canGo = imageBase64 && selectedBudget && (selectedStyles.length > 0 || selectedFeatures.length > 0);
-  document.getElementById('genBtn').style.display = canGo ? 'flex' : 'none';
+function checkCanGenerate(){
+  var ok=imageBase64&&selectedBudget&&(selectedStyles.length>0||selectedFeatures.length>0);
+  document.getElementById('genBtn').style.display=ok?'flex':'none';
 }
 
-function buildPrompt() {
-  var parts = [
+function buildPrompt(){
+  var p=[
     'Photorealistic professional garden design transformation.',
-    'This is the EXACT same garden space as the reference photo — identical overhead bird\'s eye view angle, same rectangular plot shape, same surrounding timber fence panels and walls, same neighbouring rooftops and buildings visible beyond the fence.',
+    'This is the EXACT same garden space as the reference photo — identical overhead birds eye view angle, same rectangular plot shape, same surrounding timber fence panels and walls, same neighbouring rooftops and buildings visible beyond the fence.',
     'Do NOT change the viewpoint, camera angle or plot boundaries. The fences and walls must look identical.',
-    'The overgrown weedy grass, dandelions and straggly plants have been completely cleared and replaced with a stunning professionally landscaped garden.',
-    'Budget level: ' + selectedBudget + '.',
+    'The overgrown weedy grass, dandelions and plants have been completely cleared and replaced with a stunning professionally landscaped garden.',
+    'Budget level: '+selectedBudget+'.'
   ];
-  if (selectedBudgetDesc) parts.push('Materials and features appropriate for this budget: ' + selectedBudgetDesc + '.');
-  if (selectedStyles.length > 0) parts.push('Design style: ' + selectedStyles.join(' and ') + '.');
-  if (selectedFeatures.length > 0) parts.push('The finished garden must clearly include: ' + selectedFeatures.join(', ') + '.');
-  parts.push('Viewed from above looking down into the enclosed garden. Bright natural daylight. Immaculate finish. Realistic achievable result. Professional landscaping photography.');
-  return parts.join(' ');
+  if(selectedBudgetDesc)p.push('Materials and features for this budget: '+selectedBudgetDesc+'.');
+  if(selectedStyles.length>0)p.push('Design style: '+selectedStyles.join(' and ')+'.');
+  if(selectedFeatures.length>0)p.push('The finished garden must clearly include: '+selectedFeatures.join(', ')+'.');
+  p.push('Viewed from above looking down into the enclosed garden. Bright natural daylight. Immaculate finish. Realistic achievable result. Professional landscaping photography.');
+  return p.join(' ');
 }
 
-function buildSummary() {
-  var bits = [];
-  if (selectedBudget) bits.push(selectedBudget + ' budget');
-  if (selectedStyles.length > 0) bits.push(selectedStyles.map(function(s) { return s.split(',')[0]; }).join(', '));
-  if (selectedFeatures.length > 0) bits.push(selectedFeatures.join(', '));
-  return bits.join(' · ');
+function buildSummary(){
+  var b=[];
+  if(selectedBudget)b.push(selectedBudget+' budget');
+  if(selectedStyles.length>0)b.push(selectedStyles.map(function(s){return s.split(',')[0];}).join(', '));
+  if(selectedFeatures.length>0)b.push(selectedFeatures.join(', '));
+  return b.join(' · ');
 }
 
-function openModal() {
-  document.getElementById('modal').classList.add('open');
-  setTimeout(function() { document.getElementById('nameIn').focus(); }, 80);
-}
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
-document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-document.addEventListener('keydown', function(e) { if (e.key === 'Enter' && document.getElementById('modal').classList.contains('open')) submitLead(); });
+function openModal(){document.getElementById('modal').classList.add('open');setTimeout(function(){document.getElementById('nameIn').focus();},80);}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('modal').classList.contains('open'))submitLead();});
 
-async function submitLead() {
-  var name = document.getElementById('nameIn').value.trim();
-  var email = document.getElementById('emailIn').value.trim();
-  var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  document.getElementById('nameErr').style.display = name ? 'none' : 'block';
-  document.getElementById('emailErr').style.display = emailOk ? 'none' : 'block';
-  if (!name || !emailOk) return;
-  var btn = document.getElementById('submitBtn');
-  btn.disabled = true; btn.textContent = 'Saving…';
-  if (SHEET_URL && SHEET_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-    try {
-      var ts = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
-      await fetch(SHEET_URL + '?name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email) + '&timestamp=' + encodeURIComponent(ts) + '&choices=' + encodeURIComponent(buildSummary()), { method: 'GET', mode: 'no-cors' });
-    } catch(e) {}
+async function submitLead(){
+  var name=document.getElementById('nameIn').value.trim();
+  var email=document.getElementById('emailIn').value.trim();
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  document.getElementById('nameErr').style.display=name?'none':'block';
+  document.getElementById('emailErr').style.display=emailOk?'none':'block';
+  if(!name||!emailOk)return;
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.textContent='Saving…';
+  if(SHEET_URL&&SHEET_URL!=='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+    try{
+      var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
+      await fetch(SHEET_URL+'?name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&timestamp='+encodeURIComponent(ts)+'&choices='+encodeURIComponent(buildSummary()),{method:'GET',mode:'no-cors'});
+    }catch(e){}
   }
   closeModal();
-  document.getElementById('pgUpload').style.display = 'none';
-  document.getElementById('pgResults').style.display = 'block';
-  document.getElementById('origImg').src = imageDataURL;
-  document.getElementById('resSummary').textContent = buildSummary();
-  document.getElementById('resultsSub').textContent = 'Based on your choices: ' + buildSummary();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('pgUpload').style.display='none';
+  document.getElementById('pgResults').style.display='block';
+  document.getElementById('origImg').src=imageDataURL;
+  document.getElementById('resSummary').textContent=buildSummary();
+  document.getElementById('resultsSub').textContent='Based on your choices: '+buildSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
   generate();
 }
 
-async function generate() {
-  document.getElementById('loadBox').style.display = 'block';
-  document.getElementById('errBox').style.display = 'none';
-  document.getElementById('resBox').style.display = 'none';
-  var status = document.getElementById('loadStatus');
-  try {
-    status.textContent = 'Building your personalised prompt…';
-    var prompt = buildPrompt();
-    var boundary = 'GardenBoundary' + Date.now();
-    var imageRequest = JSON.stringify({ prompt: prompt, model: 'V_2', aspect_ratio: 'ASPECT_4_3', magic_prompt_option: 'OFF', num_samples: 4 });
-    var binary = atob(imageBase64);
-    var bytes = new Uint8Array(binary.length);
-    for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    var ext = imageMime === 'image/png' ? 'png' : (imageMime === 'image/webp' ? 'webp' : 'jpg');
-    var enc = new TextEncoder();
-    var parts = [
-      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_request"\r\n\r\n' + imageRequest + '\r\n'),
-      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n95\r\n'),
-      enc.encode('--' + boundary + '\r\nContent-Disposition: form-data; name="image_file"; filename="garden.' + ext + '"\r\nContent-Type: ' + imageMime + '\r\n\r\n'),
+async function generate(){
+  document.getElementById('loadBox').style.display='block';
+  document.getElementById('errBox').style.display='none';
+  document.getElementById('resBox').style.display='none';
+  var status=document.getElementById('loadStatus');
+  try{
+    status.textContent='Building your personalised prompt…';
+    var prompt=buildPrompt();
+    var boundary='GardenBoundary'+Date.now();
+    var imageRequest=JSON.stringify({prompt:prompt,model:'V_2',aspect_ratio:'ASPECT_4_3',magic_prompt_option:'OFF',num_samples:4});
+    var binary=atob(imageBase64);
+    var bytes=new Uint8Array(binary.length);
+    for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+    var ext=imageMime==='image/png'?'png':(imageMime==='image/webp'?'webp':'jpg');
+    var enc=new TextEncoder();
+    var parts=[
+      enc.encode('--'+boundary+'\r\nContent-Disposition: form-data; name="image_request"\r\n\r\n'+imageRequest+'\r\n'),
+      enc.encode('--'+boundary+'\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n95\r\n'),
+      enc.encode('--'+boundary+'\r\nContent-Disposition: form-data; name="image_file"; filename="garden.'+ext+'"\r\nContent-Type: '+imageMime+'\r\n\r\n'),
       bytes,
-      enc.encode('\r\n--' + boundary + '--\r\n')
+      enc.encode('\r\n--'+boundary+'--\r\n')
     ];
-    var totalLen = parts.reduce(function(s, p) { return s + p.length; }, 0);
-    var body = new Uint8Array(totalLen);
-    var offset = 0;
-    parts.forEach(function(p) { body.set(p, offset); offset += p.length; });
-    status.textContent = 'AI is designing your garden…';
-    var res = await fetch(PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data; boundary=' + boundary }, body: body });
-    var data = await res.json();
-    if (!res.ok) throw new Error(data.error || JSON.stringify(data));
-    if (!data.data || data.data.length === 0) throw new Error('No images returned. Please try again.');
-    var urls = data.data.slice(0, 4).map(function(i) { return i.url; });
-    while (urls.length < 4) urls.push(urls[0]);
-    document.getElementById('r1').src = urls[0];
-    document.getElementById('r2').src = urls[1];
-    document.getElementById('r3').src = urls[2];
-    document.getElementById('r4').src = urls[3];
-    document.getElementById('loadBox').style.display = 'none';
-    document.getElementById('resBox').style.display = 'block';
-  } catch(err) {
+    var totalLen=parts.reduce(function(s,p){return s+p.length;},0);
+    var body=new Uint8Array(totalLen);
+    var offset=0;
+    parts.forEach(function(p){body.set(p,offset);offset+=p.length;});
+    status.textContent='AI is designing your garden…';
+    var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'multipart/form-data; boundary='+boundary},body:body});
+    var data=await res.json();
+    if(!res.ok)throw new Error(data.error||JSON.stringify(data));
+    if(!data.data||data.data.length===0)throw new Error('No images returned. Please try again.');
+    var urls=data.data.slice(0,4).map(function(i){return i.url;});
+    while(urls.length<4)urls.push(urls[0]);
+    document.getElementById('r1').src=urls[0];
+    document.getElementById('r2').src=urls[1];
+    document.getElementById('r3').src=urls[2];
+    document.getElementById('r4').src=urls[3];
+    document.getElementById('loadBox').style.display='none';
+    document.getElementById('resBox').style.display='block';
+  }catch(err){
     console.error(err);
-    document.getElementById('loadBox').style.display = 'none';
-    document.getElementById('errBox').style.display = 'block';
-    document.getElementById('errMsg').textContent = err.message || 'Something went wrong. Please try again.';
+    document.getElementById('loadBox').style.display='none';
+    document.getElementById('errBox').style.display='block';
+    document.getElementById('errMsg').textContent=err.message||'Something went wrong. Please try again.';
   }
 }
 </script>
