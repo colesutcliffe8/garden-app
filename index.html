@@ -394,28 +394,19 @@ async function generate(){
   document.getElementById('resBox').style.display='none';
   var status=document.getElementById('loadStatus');
   try{
-    status.textContent='Building your personalised prompt…';
-    var prompt=buildPrompt();
-    var boundary='GardenBoundary'+Date.now();
-    var imageRequest=JSON.stringify({prompt:prompt,model:'V_2',aspect_ratio:'ASPECT_4_3',magic_prompt_option:'OFF',num_samples:4});
-    var binary=atob(imageBase64);
-    var bytes=new Uint8Array(binary.length);
-    for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-    var ext=imageMime==='image/png'?'png':(imageMime==='image/webp'?'webp':'jpg');
-    var enc=new TextEncoder();
-    var parts=[
-      enc.encode('--'+boundary+'\r\nContent-Disposition: form-data; name="image_request"\r\n\r\n'+imageRequest+'\r\n'),
-      enc.encode('--'+boundary+'\r\nContent-Disposition: form-data; name="image_weight"\r\n\r\n95\r\n'),
-      enc.encode('--'+boundary+'\r\nContent-Disposition: form-data; name="image_file"; filename="garden.'+ext+'"\r\nContent-Type: '+imageMime+'\r\n\r\n'),
-      bytes,
-      enc.encode('\r\n--'+boundary+'--\r\n')
-    ];
-    var totalLen=parts.reduce(function(s,p){return s+p.length;},0);
-    var body=new Uint8Array(totalLen);
-    var offset=0;
-    parts.forEach(function(p){body.set(p,offset);offset+=p.length;});
-    status.textContent='AI is designing your garden…';
-    var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'multipart/form-data; boundary='+boundary},body:body});
+    status.textContent='Sending your photo to AI…';
+
+    // Send as clean JSON — the server builds the multipart form properly
+    var res=await fetch(PROXY_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        imageBase64: imageBase64,
+        imageMime: imageMime,
+        prompt: buildPrompt()
+      })
+    });
+
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||JSON.stringify(data));
     if(!data.data||data.data.length===0)throw new Error('No images returned. Please try again.');
