@@ -105,7 +105,6 @@
     .cta p{color:var(--text-muted);font-size:.93rem;max-width:500px;margin:0 auto 28px;line-height:1.7}
     .quote-btn{background:var(--gold);color:#fff;border:none;padding:16px 40px;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;transition:background .2s;display:inline-block}
     .quote-btn:hover{background:#b8942e}
-    /* QUOTE FORM PAGE */
     #pgQuote{display:none}
     .quote-wrap{max-width:600px;margin:0 auto;padding:48px 20px}
     .quote-hdr{text-align:center;margin-bottom:32px}
@@ -117,7 +116,6 @@
     .quote-submit{width:100%;background:var(--green);color:#fff;border:none;padding:16px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:background .2s}
     .quote-submit:hover{background:var(--green-dark)}
     .quote-submit:disabled{opacity:.5;cursor:not-allowed}
-    /* THANK YOU */
     #pgThanks{display:none}
     .thanks-wrap{max-width:500px;margin:80px auto;padding:0 20px;text-align:center}
     .thanks-icon{font-size:3.5rem;margin-bottom:20px}
@@ -128,7 +126,6 @@
 </head>
 <body>
 
-<!-- UPLOAD PAGE -->
 <div id="pgUpload">
   <header class="header">
     <div class="badge">FREE INSTANT TOOL</div>
@@ -222,7 +219,6 @@
   </div>
 </div>
 
-<!-- LEAD MODAL -->
 <div id="modal" class="modal-bg">
   <div class="modal-box">
     <h3>Almost there! 🎉</h3>
@@ -242,7 +238,6 @@
   </div>
 </div>
 
-<!-- RESULTS PAGE -->
 <div id="pgResults">
   <div class="results-wrap">
     <div class="results-hdr">
@@ -281,7 +276,6 @@
   </div>
 </div>
 
-<!-- QUOTE FORM PAGE -->
 <div id="pgQuote">
   <div class="quote-wrap">
     <div class="quote-hdr">
@@ -355,7 +349,6 @@
   </div>
 </div>
 
-<!-- THANK YOU PAGE -->
 <div id="pgThanks">
   <div class="thanks-wrap">
     <div class="thanks-icon">🎉</div>
@@ -453,11 +446,31 @@ function generateMask(imgEl){
   var mctx=mask.getContext('2d');
   var mdata=mctx.createImageData(w,h);
   var md=mdata.data;
+  var gardenCount=0;
+  var total=d.length/4;
   for(var i=0;i<d.length;i+=4){
     var r=d[i],g=d[i+1],b=d[i+2];
     var isGreen=(g>r*1.1&&g>b*1.1&&g>50);
     var isBrown=(r>80&&g>50&&b<80&&r>g&&r>b);
-    var val=(isGreen||isBrown)?0:255;
+    var isEarth=(r>60&&g>40&&b>20&&r>b&&Math.abs(r-g)<40);
+    if(isGreen||isBrown||isEarth)gardenCount++;
+  }
+  var useFallback=(gardenCount/total)<0.05;
+  for(var i=0;i<d.length;i+=4){
+    var pixelIndex=i/4;
+    var px=pixelIndex%w;
+    var py=Math.floor(pixelIndex/w);
+    var val;
+    if(useFallback){
+      var inGardenArea=(py>h*0.35&&px>w*0.05&&px<w*0.95);
+      val=inGardenArea?0:255;
+    }else{
+      var r=d[i],g=d[i+1],b=d[i+2];
+      var isGreen=(g>r*1.1&&g>b*1.1&&g>50);
+      var isBrown=(r>80&&g>50&&b<80&&r>g&&r>b);
+      var isEarth=(r>60&&g>40&&b>20&&r>b&&Math.abs(r-g)<40);
+      val=(isGreen||isBrown||isEarth)?0:255;
+    }
     md[i]=md[i+1]=md[i+2]=val;
     md[i+3]=255;
   }
@@ -469,7 +482,7 @@ function buildPrompt(){
   var features=[];
   if(selectedStyles.length>0)features=features.concat(selectedStyles);
   if(selectedFeatures.length>0)features=features.concat(selectedFeatures);
-  return 'Professionally landscaped garden with: '+features.join(', ')+'. The garden must be exactly the same size and shape as in the original photo — do not make it bigger or smaller. Do not add any buildings, extensions, conservatories, ponds, or anything not listed above. Keep the fences, walls and all surroundings completely unchanged.';
+  return 'Professionally landscaped garden with: '+features.join(', ')+'. Layout must feel natural and well-planned — place a patio or seating area near the house, lawn in the middle, planting beds along the edges and fence line. Everything must fit neatly within the existing garden boundaries — do not overflow into fences, walls or outside the garden. No awkward gaps or random placement. The garden must be exactly the same size and shape as the original. Do not add buildings, extensions, conservatories or anything not listed. Keep fences, walls and surroundings identical.';
 }
 
 function buildSummary(){
@@ -480,10 +493,7 @@ function buildSummary(){
   return b.join(' · ');
 }
 
-function openModal(){
-  document.getElementById('modal').classList.add('open');
-  setTimeout(function(){document.getElementById('nameIn').focus();},80);
-}
+function openModal(){document.getElementById('modal').classList.add('open');setTimeout(function(){document.getElementById('nameIn').focus();},80);}
 function closeModal(){document.getElementById('modal').classList.remove('open');}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('modal').classList.contains('open'))submitLead();});
@@ -498,13 +508,10 @@ async function submitLead(){
   leadName=name;leadEmail=email;
   var btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.textContent='Saving…';
-
-  // Save lead to Google Sheet
   try{
     var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
     await fetch(SHEET_URL+'?type=lead&timestamp='+encodeURIComponent(ts)+'&name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&choices='+encodeURIComponent(buildSummary()),{method:'GET',mode:'no-cors'});
   }catch(e){}
-
   closeModal();
   document.getElementById('pgUpload').style.display='none';
   document.getElementById('pgResults').style.display='block';
@@ -516,7 +523,6 @@ async function submitLead(){
 }
 
 function showQuotePage(){
-  // Pre-fill name and email from lead modal
   document.getElementById('qName').value=leadName;
   document.getElementById('qEmail').value=leadEmail;
   if(selectedBudget){
@@ -540,36 +546,18 @@ async function submitQuote(){
   var time=document.getElementById('qTime').value;
   var budget=document.getElementById('qBudget').value;
   var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
   document.getElementById('qNameErr').style.display=name?'none':'block';
   document.getElementById('qEmailErr').style.display=emailOk?'none':'block';
   document.getElementById('qPhoneErr').style.display=phone?'none':'block';
   document.getElementById('qPostcodeErr').style.display=postcode?'none':'block';
   document.getElementById('qSizeErr').style.display=size?'none':'block';
-
   if(!name||!emailOk||!phone||!postcode||!size)return;
-
   var btn=document.getElementById('quoteSubmitBtn');
   btn.disabled=true;btn.textContent='Sending…';
-
   try{
     var ts=new Date().toLocaleString('en-GB',{timeZone:'Europe/London'});
-    await fetch(SHEET_URL
-      +'?type=quote'
-      +'&timestamp='+encodeURIComponent(ts)
-      +'&name='+encodeURIComponent(name)
-      +'&email='+encodeURIComponent(email)
-      +'&choices='+encodeURIComponent(buildSummary())
-      +'&phone='+encodeURIComponent(phone)
-      +'&address='+encodeURIComponent(postcode)
-      +'&gardenSize='+encodeURIComponent(size)
-      +'&wantDone='+encodeURIComponent(want)
-      +'&bestTime='+encodeURIComponent(time)
-      +'&budget='+encodeURIComponent(budget),
-      {method:'GET',mode:'no-cors'}
-    );
+    await fetch(SHEET_URL+'?type=quote&timestamp='+encodeURIComponent(ts)+'&name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&choices='+encodeURIComponent(buildSummary())+'&phone='+encodeURIComponent(phone)+'&address='+encodeURIComponent(postcode)+'&gardenSize='+encodeURIComponent(size)+'&wantDone='+encodeURIComponent(want)+'&bestTime='+encodeURIComponent(time)+'&budget='+encodeURIComponent(budget),{method:'GET',mode:'no-cors'});
   }catch(e){}
-
   document.getElementById('pgQuote').style.display='none';
   document.getElementById('pgThanks').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
@@ -587,11 +575,7 @@ async function generate(){
     await new Promise(function(resolve){img.onload=resolve;});
     var maskBase64=generateMask(img);
     status.textContent='Sending to AI…';
-    var res=await fetch(PROXY_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({imageBase64:imageBase64,maskBase64:maskBase64,imageMime:imageMime,prompt:buildPrompt()})
-    });
+    var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({imageBase64:imageBase64,maskBase64:maskBase64,imageMime:imageMime,prompt:buildPrompt()})});
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||JSON.stringify(data));
     if(!data.data||data.data.length===0)throw new Error('No images returned. Please try again.');
