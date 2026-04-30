@@ -145,9 +145,9 @@
           <div><div class="step-title">Upload your garden photo</div><div class="step-sub">Any angle works — front, back, patio or side return</div></div>
         </div>
         <div id="dropzone" class="dropzone">
-          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" capture="environment" style="display:none">
+          <input type="file" id="fileInput" accept="image/*" style="display:none">
           <div class="dz-icon">📷</div>
-          <h4>Tap to upload your photo</h4>
+          <h4>Upload your garden photo</h4>
           <p>JPG, PNG or WEBP · max 20MB</p>
           <button class="choose-btn" id="chooseBtn" type="button">Choose photo</button>
           <div class="dz-note">Processed privately · never stored permanently</div>
@@ -376,15 +376,15 @@ dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('o
 fi.addEventListener('change',function(){if(fi.files[0])loadFile(fi.files[0]);});
 
 function loadFile(file){
-  if(!file.type.match(/image\/(jpeg|png|webp)/)){alert('Please upload a JPG, PNG or WEBP image.');return;}
+  if(!file.type.match(/image\/(jpeg|png|webp|gif|heic|heif)/i)&&!file.type.match(/image\//)){
+    alert('Please upload an image file.');return;
+  }
   if(file.size>20*1024*1024){alert('Please use an image under 20MB.');return;}
-  // Always convert to jpeg and resize — works reliably on all devices including mobile
   var reader=new FileReader();
   reader.onload=function(e){
     var img=new Image();
     img.onload=function(){
       try{
-        // Resize to max 1200px on longest side — keeps file small enough for reliable transfer
         var maxSize=1200;
         var w=img.width,h=img.height;
         if(w>maxSize||h>maxSize){
@@ -393,8 +393,7 @@ function loadFile(file){
         }
         var canvas=document.createElement('canvas');
         canvas.width=w;canvas.height=h;
-        var ctx=canvas.getContext('2d');
-        ctx.drawImage(img,0,0,w,h);
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
         imageDataURL=canvas.toDataURL('image/jpeg',0.82);
         imageBase64=imageDataURL.split(',')[1];
         imageMime='image/jpeg';
@@ -403,9 +402,7 @@ function loadFile(file){
         dz.style.display='none';
         document.getElementById('step2Block').style.opacity='1';
         document.getElementById('step2Block').style.pointerEvents='auto';
-      }catch(err){
-        alert('Could not process image. Please try a different photo.');
-      }
+      }catch(err){alert('Could not process image. Please try a different photo.');}
     };
     img.onerror=function(){alert('Could not load image. Please try a different photo.');};
     img.src=e.target.result;
@@ -457,10 +454,6 @@ function checkCanGenerate(){
   document.getElementById('genBtn').style.display=ok?'flex':'none';
 }
 
-// Simple reliable mask — works on every browser and device
-// White = keep, Black = change
-// Keeps top 30% (sky/background) and thin edge strips (fences)
-// Edits the main garden area in the middle/bottom
 function generateMask(w,h){
   var canvas=document.createElement('canvas');
   canvas.width=w;canvas.height=h;
@@ -563,28 +556,16 @@ async function generate(){
   var status=document.getElementById('loadStatus');
   try{
     status.textContent='Preparing your image…';
-
-    // Get image dimensions from the preview image
     var previewImg=document.getElementById('previewImg');
     var w=previewImg.naturalWidth||800;
     var h=previewImg.naturalHeight||600;
-
-    // Generate simple reliable mask — no pixel detection, works on all devices
     var maskBase64=generateMask(w,h);
-
     status.textContent='Sending to AI…';
-
     var res=await fetch(PROXY_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        imageBase64:imageBase64,
-        maskBase64:maskBase64,
-        imageMime:imageMime,
-        prompt:buildPrompt()
-      })
+      body:JSON.stringify({imageBase64:imageBase64,maskBase64:maskBase64,imageMime:imageMime,prompt:buildPrompt()})
     });
-
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||JSON.stringify(data));
     if(!data.data||data.data.length===0)throw new Error('No images returned. Please try again.');
