@@ -186,10 +186,10 @@
         </div>
         <div class="style-grid">
           <div class="style-pill" onclick="toggleStyle(this,'low maintenance with gravel and evergreen shrubs')">🌿 Low Maintenance</div>
-          <div class="style-pill" onclick="toggleStyle(this,'family friendly with lawn and open space')">👨‍👩‍👧 Family Friendly</div>
-          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary with porcelain paving and architectural plants')">🏙️ Modern / Contemporary</div>
-          <div class="style-pill" onclick="toggleStyle(this,'cottage garden with colourful flowers and rustic materials')">🌸 Cottage / Natural</div>
-          <div class="style-pill" onclick="toggleStyle(this,'entertainment space with dining area and seating')">🥂 Entertainment Space</div>
+          <div class="style-pill" onclick="toggleStyle(this,'family friendly with lawn and open space for children')">👨‍👩‍👧 Family Friendly</div>
+          <div class="style-pill" onclick="toggleStyle(this,'modern contemporary with large format porcelain paving and architectural plants')">🏙️ Modern / Contemporary</div>
+          <div class="style-pill" onclick="toggleStyle(this,'cottage garden with colourful flowers and rustic natural materials')">🌸 Cottage / Natural</div>
+          <div class="style-pill" onclick="toggleStyle(this,'entertainment space with outdoor dining area and comfortable seating')">🥂 Entertainment Space</div>
         </div>
       </div>
 
@@ -203,7 +203,7 @@
           <div class="feature-item" onclick="toggleFeature(this,'decking')"><div class="feature-cb"></div><span class="feature-emoji">🪵</span><span class="feature-name">Decking</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'lawn')"><div class="feature-cb"></div><span class="feature-emoji">🌱</span><span class="feature-name">Lawn</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'outdoor lighting')"><div class="feature-cb"></div><span class="feature-emoji">💡</span><span class="feature-name">Lighting</span></div>
-          <div class="feature-item" onclick="toggleFeature(this,'raised beds and planters')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds</span></div>
+          <div class="feature-item" onclick="toggleFeature(this,'raised beds and planters along the edges')"><div class="feature-cb"></div><span class="feature-emoji">🌺</span><span class="feature-name">Raised Beds</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'fencing and screening')"><div class="feature-cb"></div><span class="feature-emoji">🪜</span><span class="feature-name">Fencing / Screening</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'water feature')"><div class="feature-cb"></div><span class="feature-emoji">💧</span><span class="feature-name">Water Feature</span></div>
           <div class="feature-item" onclick="toggleFeature(this,'seating area with garden furniture')"><div class="feature-cb"></div><span class="feature-emoji">🪑</span><span class="feature-name">Seating Area</span></div>
@@ -383,7 +383,6 @@ function loadFile(file){
     var img=new Image();
     img.onload=function(){
       try{
-        // Max 600px — small enough to work reliably on any mobile connection
         var maxSize=600;
         var w=img.width,h=img.height;
         if(w>maxSize||h>maxSize){
@@ -457,10 +456,12 @@ function generateMask(w,h){
   var canvas=document.createElement('canvas');
   canvas.width=w;canvas.height=h;
   var ctx=canvas.getContext('2d');
+  // Everything white (keep unchanged)
   ctx.fillStyle='white';
   ctx.fillRect(0,0,w,h);
+  // Only edit the inner garden — leave a border around all edges for fences/walls
   ctx.fillStyle='black';
-  ctx.fillRect(Math.floor(w*0.04),Math.floor(h*0.28),Math.floor(w*0.92),Math.floor(h*0.72));
+  ctx.fillRect(Math.floor(w*0.06),Math.floor(h*0.32),Math.floor(w*0.88),Math.floor(h*0.65));
   return canvas.toDataURL('image/png').split(',')[1];
 }
 
@@ -468,7 +469,13 @@ function buildPrompt(){
   var features=[];
   if(selectedStyles.length>0)features=features.concat(selectedStyles);
   if(selectedFeatures.length>0)features=features.concat(selectedFeatures);
-  return 'Professionally landscaped garden with: '+features.join(', ')+'. Layout must feel natural and well-planned — place a patio or seating area near the house, lawn in the middle, planting beds along the edges and fence line. Everything must fit neatly within the existing garden boundaries. No awkward gaps or random placement. The garden must be exactly the same size and shape as the original. Do not add buildings, extensions, conservatories or anything not listed. Keep fences, walls and surroundings identical.';
+  var featureList=features.join(', ');
+
+  return 'This is a photo of a real garden. Edit ONLY the ground surface area inside the garden. Do not change the size of the garden — it must remain exactly the same dimensions as in the original photo. Do not add any structures, extensions, buildings or features outside the existing garden boundary. Do not touch neighbouring gardens, fences, walls, buildings or the sky. Only replace what is on the ground inside the garden. ' +
+  'Replace the ground with a professionally designed garden layout containing only these specific elements: '+featureList+'. ' +
+  'Place elements thoughtfully and realistically: hard surfaces like patio or decking should sit closest to the house, lawn should fill the main open space in the middle, planting beds and raised beds should run along the fence edges, seating areas should be positioned naturally near the patio. ' +
+  'Do NOT add anything that was not listed above — no random ponds, no extra buildings, no features that were not selected. ' +
+  'The result must look like a real professionally landscaped garden photo taken from the exact same angle and position as the original. Natural daylight. Photorealistic.';
 }
 
 function buildSummary(){
